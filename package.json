@@ -1,0 +1,27 @@
+{
+  "name": "treasury",
+  "version": "0.0.1",
+  "description": "Check your caching layer before running your promises",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha test/bootstrap.test.js test/unit/**/*.test.js",
+    "lint": "./node_modules/jshint/bin/jshint **.js",
+    "style": "jscs **.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/camsjams/node-treasury.git"
+  },
+  "keywords": [
+    "cache",
+    "promises",
+    "redis",
+    "memcache"
+  ],
+  "author": "Cameron Manavian",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/camsjams/node-treasury/issues"
+  },
+  "homepage": "https://github.com/camsjams/node-treasury#readme"
+}

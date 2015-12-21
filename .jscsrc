@@ -1,0 +1,12 @@
+{
+    "preset": "node-style-guide",
+    "validateIndentation": 4,
+    "requireTrailingComma": false,
+    "requireCapitalizedComments": false,
+    "safeContextKeyword": [
+        "self"
+    ],
+    "excludeFiles": [
+        "node_modules"
+    ]
+}
