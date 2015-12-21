@@ -4,7 +4,7 @@
   "description": "Check your caching layer before running your promises",
   "main": "index.js",
   "scripts": {
-    "test": "mocha test/bootstrap.test.js test/unit/**/*.test.js",
+    "test": "mocha test/unit/**/*.test.js",
     "lint": "jshint **.js",
     "style": "jscs **.js"
   },
@@ -23,5 +23,13 @@
   "bugs": {
     "url": "https://github.com/camsjams/node-treasury/issues"
   },
-  "homepage": "https://github.com/camsjams/node-treasury#readme"
+  "homepage": "https://github.com/camsjams/node-treasury#readme",
+  "devDependencies": {
+    "jshint": "2.8.0",
+    "jscs": "2.7.0",
+    "mocha": "2.3.4"
+  },
+  "dependencies": {
+    "tauist": "^1.0.1"
+  }
 }

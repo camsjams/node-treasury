@@ -6,7 +6,6 @@
     "loopfunc": true,
     "boss": true,
     "laxcomma": true,
-    "bitwise": true,
     "camelcase": true,
     "esnext": true,
     "node": true,
