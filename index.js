@@ -1,12 +1,20 @@
 'use strict';
-
 var tauist = require('tauist');
+
+function defaultClient() {
+    return null;
+}
 
 function getDefaultOptions() {
     return {
-        ttl: tauist.s.fiveMinutes,
-        promiseFactory: nativePromise
+        client: defaultClient,
+        promiseFactory: nativePromise,
+        ttl: tauist.s.fiveMinutes
     };
+}
+
+function getCleanedOptions(opts) {
+    return Object.assign({}, getDefaultOptions(), opts);
 }
 
 function nativePromise(resolver) {
@@ -14,9 +22,7 @@ function nativePromise(resolver) {
 }
 
 function Treasury(opts) {
-    opts = opts || getDefaultOptions();
-    var promiseFactory = opts.promiseFactory || nativePromise;
-    var defaultTtl = ~~(opts.ttl) || tauist.s.fiveMinutes;
+    var config = getCleanedOptions(opts);
 
     return {
         invest: invest,
@@ -24,9 +30,7 @@ function Treasury(opts) {
     };
 
     function invest(thePromise, options) {
-        console.log('thePromise', thePromise);
-        console.log('options', options);
-        return promiseFactory(function(resolve, reject) {
+        return config.promiseFactory(function(resolve, reject) {
             thePromise
                 .then(function() {
                     resolve();
@@ -38,7 +42,7 @@ function Treasury(opts) {
     }
 
     function divest() {
-        return promiseFactory(function(resolve, reject) {
+        return config.promiseFactory(function(resolve, reject) {
             resolve();
         });
     }

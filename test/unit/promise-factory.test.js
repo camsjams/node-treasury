@@ -1,32 +1,65 @@
-var assert = require('assert');
+var chai = require('chai');
 var Treasury = require('../../index');
-var treasury = new Treasury();
 
 describe('Test supported promise factories', testPromiseFactories);
 
 function testPromiseFactories() {
     describe('#testNative', testNative);
+    describe('#testQ', testQ);
+    describe('#testBluebird', testBluebird);
+
+    var promiseBeingMade = new Promise(function(resolve) {
+        resolve(true);
+    });
 
     function testNative() {
+        var treasury = new Treasury();
 
         it('should have returned a Promise', basicPromise);
 
-        function basicPromise() {
+        function basicPromise(done) {
             // arrange
-            var cachedFunction = treasury.invest();
+            // act
+            var result = treasury.invest(promiseBeingMade);
+
+            // assert
+            chai.assert.typeOf(result, 'Promise');
+
+            done();
+        }
+    }
+
+    function testQ() {
+        it('should have returned a Q Promise', basicPromise);
+
+        function basicPromise(done) {
+            // arrange
+            var treasury = new Treasury(require('q').Promise);
 
             // act
-            return cachedFunction()
-                .then(
-                function fulfilled(result) {
-                    // assert
-                    console.log('fulfilled result', result);
-                    assert(result);
-                },
-                function rejected(error) {
-                    throw new Error('cachedFunction Promise was unexpectedly rejected with:', error);
-                });
-        }
+            var result = treasury.invest(promiseBeingMade);
 
+            // assert
+            chai.assert.typeOf(result, 'Promise');
+
+            done();
+        }
+    }
+
+    function testBluebird() {
+        it('should have returned a Bluebird Promise', basicPromise);
+
+        function basicPromise(done) {
+            // arrange
+            var treasury = new Treasury(require('bluebird'));
+
+            // act
+            var result = treasury.invest(promiseBeingMade);
+
+            // assert
+            chai.assert.typeOf(result, 'Promise');
+
+            done();
+        }
     }
 }
