@@ -9,4 +9,4 @@ Check your caching layer before running your promises
 * [Redis](http://redis.io/)
 * [Node Redis](https://github.com/NodeRedis/node_redis)
 * [Memcached](http://memcached.org/)
-* [Memcached client](https://github.com/3rd-Eden/memcached)
+* [Memcached node client](https://github.com/3rd-Eden/memcached)
