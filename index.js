@@ -1,13 +1,10 @@
 'use strict';
 var tauist = require('tauist');
-
-function defaultClient() {
-    return null;
-}
+var adapters = require('./lib/adapters');
 
 function getDefaultOptions() {
     return {
-        client: defaultClient,
+        client: new adapters.MemoryClientAdapter(),
         promiseFactory: nativePromise,
         ttl: tauist.s.fiveMinutes
     };
@@ -23,6 +20,7 @@ function nativePromise(resolver) {
 
 function Treasury(opts) {
     var config = getCleanedOptions(opts);
+    var client = adapters.getClientAdapter(config.client);
 
     return {
         invest: invest,

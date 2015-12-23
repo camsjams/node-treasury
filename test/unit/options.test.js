@@ -22,7 +22,7 @@ function testOptions() {
 
             // assert
             chai.assert.typeOf(result, 'Object');
-            chai.assert.typeOf(result.client, 'Function');
+            chai.assert.typeOf(result.client, 'Object');
             chai.assert.equal(result.ttl, 300);
             chai.assert.typeOf(result.promiseFactory, 'Function');
 
@@ -38,7 +38,7 @@ function testOptions() {
 
             // assert
             chai.assert.typeOf(result, 'Object');
-            chai.assert.typeOf(result.client, 'Function');
+            chai.assert.typeOf(result.client, 'Object');
             chai.assert.equal(result.ttl, 300);
             chai.assert.typeOf(result.promiseFactory, 'Function');
 
@@ -54,7 +54,7 @@ function testOptions() {
 
             // assert
             chai.assert.typeOf(result, 'Object');
-            chai.assert.typeOf(result.client, 'Function');
+            chai.assert.typeOf(result.client, 'Object');
             chai.assert.equal(result.ttl, 300);
             chai.assert.typeOf(result.promiseFactory, 'Function');
 
@@ -79,7 +79,7 @@ function testOptions() {
 
             // assert
             chai.assert.typeOf(result, 'Object');
-            chai.assert.typeOf(result.client, 'Function');
+            chai.assert.typeOf(result.client, 'Object');
             chai.assert.equal(result.ttl, 300);
             chai.assert.typeOf(result.promiseFactory, 'Function');
 
@@ -95,7 +95,7 @@ function testOptions() {
 
             // assert
             chai.assert.typeOf(result, 'Object');
-            chai.assert.typeOf(result.client, 'Function');
+            chai.assert.typeOf(result.client, 'Object');
             chai.assert.equal(result.ttl, 300);
             chai.assert.typeOf(result.promiseFactory, 'Function');
 
@@ -111,7 +111,7 @@ function testOptions() {
 
             // assert
             chai.assert.typeOf(result, 'Object');
-            chai.assert.typeOf(result.client, 'Function');
+            chai.assert.typeOf(result.client, 'Object');
             chai.assert.equal(result.ttl, 300);
             chai.assert.typeOf(result.promiseFactory, 'Function');
 
@@ -135,7 +135,7 @@ function testOptions() {
         function customClient(done) {
             // arrange
             var getCleanedOptions = Treasury.__get__('getCleanedOptions');
-            var myFakeClient = function() {
+            var myFakeClient = new function() {
                 return 1245;
             };
 
@@ -144,7 +144,7 @@ function testOptions() {
 
             // assert
             chai.assert.typeOf(result, 'Object');
-            chai.assert.typeOf(result.client, 'Function');
+            chai.assert.typeOf(result.client, 'Object');
             chai.assert.deepEqual(result.client, myFakeClient);
 
             done();
