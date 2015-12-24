@@ -15,7 +15,7 @@ function testPromiseFactories() {
     function testNative() {
         var treasury = new Treasury();
 
-        it('should have returned a Promise', basicPromise);
+        it('should return a Promise', basicPromise);
 
         function basicPromise(done) {
             // arrange
@@ -30,7 +30,7 @@ function testPromiseFactories() {
     }
 
     function testQ() {
-        it('should have returned a Q Promise', basicPromise);
+        it('should return a Q Promise', basicPromise);
 
         function basicPromise(done) {
             // arrange
@@ -47,7 +47,7 @@ function testPromiseFactories() {
     }
 
     function testBluebird() {
-        it('should have returned a Bluebird Promise', basicPromise);
+        it('should return a Bluebird Promise', basicPromise);
 
         function basicPromise(done) {
             // arrange

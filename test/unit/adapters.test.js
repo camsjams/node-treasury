@@ -94,6 +94,7 @@ function testAdapters() {
             chai.assert.typeOf(result, 'Object');
             chai.assert.typeOf(result.get, 'Function');
             chai.assert.typeOf(result.set, 'Function');
+            chai.assert.typeOf(result.delete, 'Function');
             chai.assert.typeOf(result.client, 'Null');
 
             done();
@@ -114,6 +115,7 @@ function testAdapters() {
             chai.assert.typeOf(result, 'Object');
             chai.assert.typeOf(result.get, 'Function');
             chai.assert.typeOf(result.set, 'Function');
+            chai.assert.typeOf(result.delete, 'Function');
             chai.assert.deepEqual(result.client, client);
 
             done();
@@ -134,6 +136,7 @@ function testAdapters() {
             chai.assert.typeOf(result, 'Object');
             chai.assert.typeOf(result.get, 'Function');
             chai.assert.typeOf(result.set, 'Function');
+            chai.assert.typeOf(result.delete, 'Function');
             chai.assert.deepEqual(result.client, memcached);
 
             done();

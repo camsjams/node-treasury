@@ -9,9 +9,9 @@ function testOptions() {
     describe('#testCleanedOptions', testCleanedOptions);
 
     function testDefaultOptions() {
-        it('should have accepted undefined options', undefOpts);
-        it('should have accepted null options', nullOpts);
-        it('should have accepted empty options', emptyOpts);
+        it('should accept undefined options', undefOpts);
+        it('should accept null options', nullOpts);
+        it('should accept empty options', emptyOpts);
 
         function undefOpts(done) {
             // arrange
@@ -63,12 +63,12 @@ function testOptions() {
     }
 
     function testCleanedOptions() {
-        it('should have accepted undefined options', undefOpts);
-        it('should have accepted null options', nullOpts);
-        it('should have accepted empty options', emptyOpts);
-        it('should have accepted a ttl', customDefaultTtl);
-        it('should have accepted a client', customClient);
-        it('should have accepted a promise', customPromise);
+        it('should accept undefined options', undefOpts);
+        it('should accept null options', nullOpts);
+        it('should accept empty options', emptyOpts);
+        it('should accept a ttl', customDefaultTtl);
+        it('should accept a client', customClient);
+        it('should accept a promise', customPromise);
 
         function undefOpts(done) {
             // arrange
