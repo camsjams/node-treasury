@@ -6,6 +6,14 @@ machine:
     version:
       4.0.0
 
+dependencies:
+  pre:
+    - npm prune
+    - npm install redis
+    - npm install memcached
+    - npm install q
+    - npm install bluebird
+
 test:
   pre:
     - npm run lint
