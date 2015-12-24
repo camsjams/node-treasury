@@ -8,5 +8,14 @@
     ],
     "excludeFiles": [
         "node_modules"
+    ],
+    "requireCurlyBraces": [
+        "if",
+        "else",
+        "for",
+        "while",
+        "do",
+        "try",
+        "catch"
     ]
 }

@@ -1,10 +1,11 @@
 'use strict';
+
 var tauist = require('tauist');
 var adapters = require('./lib/adapters');
 
 function getDefaultOptions() {
     return {
-        client: new adapters.MemoryClientAdapter(),
+        client: new adapters.MemoryClientAdapter(null),
         promiseFactory: nativePromise,
         ttl: tauist.s.fiveMinutes
     };
@@ -29,13 +30,13 @@ function Treasury(opts) {
 
     function invest(thePromise, options) {
         // get from cache
-            // if found in cache
-                // return value via promise
-            // if not found in cache
-                // run promise for value
-                    // if promise successful
-                        // set to cache
-                            // return data via promise
+        // -- if found in cache
+        // ---- return value via promise
+        // -- if not found in cache
+        // ---- run promise for value
+        // ------ if promise successful
+        // -------- set to cache
+        // ---------- return data via promise
         // end consumer handles all catches!
 
         return config.promiseFactory(function(resolve, reject) {
