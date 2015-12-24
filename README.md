@@ -3,7 +3,7 @@ Check your caching layer before running your promises
 
 ## Current Version 0.0.1
 
-develop -> ![develop](https://circleci.com/gh/camsjams/node-treasury/tree/develop.svg?style=shield&circle-token=a1a0cc4cef2164e9c0a8b5dd18f98797dadcf292)
+develop: ![develop](https://circleci.com/gh/camsjams/node-treasury/tree/develop.svg?style=shield&circle-token=a1a0cc4cef2164e9c0a8b5dd18f98797dadcf292)
 
 ## Platforms / Technologies
 * [nodejs](http://nodejs.org/)
