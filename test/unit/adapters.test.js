@@ -12,11 +12,11 @@ function testAdapters() {
     describe('#testMemcached', testMemcached);
 
     function testGetClientAdapter() {
-        it('should have thrown an error with undefined client as invalid_client', undefAdapter);
-        it('should have thrown an error with null client as invalid_client', nullAdapter);
-        it('should have thrown an error with unknown client unknown_client', unknownAdapter);
+        it('should throw error for undefined as invalid_client', undefClient);
+        it('should throw error for null as invalid_client', nullClient);
+        it('should throw error for unknown as unknown_client', unknownClient);
 
-        function undefAdapter(done) {
+        function undefClient(done) {
             // arrange
             var result;
             var error;
@@ -36,7 +36,7 @@ function testAdapters() {
             done();
         }
 
-        function nullAdapter(done) {
+        function nullClient(done) {
             // arrange
             var result;
             var error;
@@ -56,7 +56,7 @@ function testAdapters() {
             done();
         }
 
-        function unknownAdapter(done) {
+        function unknownClient(done) {
             // arrange
             var unknownClient = new function() {
                 // fake client here
@@ -81,12 +81,14 @@ function testAdapters() {
     }
 
     function testMemory() {
-        it('should have returned a memory client adapter', getMemoryAdapter);
+        it('should return a memory client adapter', getMemoryAdapter);
 
         function getMemoryAdapter(done) {
             // arrange
+            var memoryClient = new adapters.MemoryClientAdapter(null);
+
             // act
-            var result = adapters.getClientAdapter(new adapters.MemoryClientAdapter(null));
+            var result = adapters.getClientAdapter(memoryClient);
 
             // assert
             chai.assert.typeOf(result, 'Object');
@@ -99,7 +101,7 @@ function testAdapters() {
     }
 
     function testRedis() {
-        it('should have returned a redis client adapter', getRedisAdapter);
+        it('should return a redis client adapter', getRedisAdapter);
 
         function getRedisAdapter(done) {
             // arrange
@@ -119,7 +121,7 @@ function testAdapters() {
     }
 
     function testMemcached() {
-        it('should have returned a memcached client adapter', getMemcachedAdapter);
+        it('should return a memcached client adapter', getMemcachedAdapter);
 
         function getMemcachedAdapter(done) {
             // arrange
