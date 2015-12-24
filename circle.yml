@@ -1,0 +1,15 @@
+machine:
+  timezone:
+    UTC
+
+  node:
+    version:
+      4.0.0
+
+test:
+  pre:
+    - npm run lint
+    - npm run style
+    
+  override:
+    - npm test
