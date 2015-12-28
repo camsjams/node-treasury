@@ -1,5 +1,5 @@
 # Node Treasury: A promise to check for data in your cache layer first
-Check your caching layer before running your promises
+Check your caching layer before running your promises.
 
 ## Current Version 0.0.1
 
@@ -12,3 +12,7 @@ develop: ![develop](https://circleci.com/gh/camsjams/node-treasury/tree/develop.
 * [Node Redis](https://github.com/NodeRedis/node_redis)
 * [Memcached](http://memcached.org/)
 * [Memcached node client](https://github.com/3rd-Eden/memcached)
+
+
+## Notes
+We tried really hard not to use a cache/cash pun with treasury.
