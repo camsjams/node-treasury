@@ -71,15 +71,13 @@ function testGetClientAdapter() {
 
     function unknownClient(done) {
         // arrange
-        var unknownClient = new function() {
-            // fake client here
-        };
+        var aFakeClient = new FakeClient();
         var result;
         var error;
 
         // act
         try {
-            result = adapters.getClientAdapter(unknownClient);
+            result = adapters.getClientAdapter(aFakeClient);
         } catch (e) {
             error = e;
         }
@@ -93,10 +91,6 @@ function testGetClientAdapter() {
     }
 }
 
-function waitPromise() {
-    return new Promise(function(resolve) {
-        setTimeout(function() {
-            resolve(true);
-        }, 300);
-    });
+function FakeClient() {
+    return {clientName: true};
 }
