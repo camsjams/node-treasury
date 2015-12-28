@@ -1,0 +1,142 @@
+var chai = require('chai');
+var adapters = require('../../../lib/adapters');
+var redis = require('redis');
+var _rewire = require('rewire');
+var Treasury = _rewire('../../../index');
+var promiseFactory = Treasury.__get__('nativePromise');
+
+describe('Test redis client and adapter', testRedis);
+
+function testRedis() {
+    it('should return a redis client adapter', getRedisAdapter);
+    //it('should reject when not found in cache', getDataFromEmpty);
+    //it('should set in cache', setData);
+    //it('should set then get from cache', setAndGetData);
+    //it('should set then get bad data from cache', setAndGetExpiredData);
+    //it('should delete from cache', deleteData);
+    //it('should delete from cache and not get later', deleteAndGetData);
+
+    function getRedisAdapter(done) {
+        // arrange
+        var client = redis.createClient();
+
+        // act
+        var result = adapters.getClientAdapter(client, promiseFactory);
+
+        // assert
+        chai.assert.typeOf(result, 'Object');
+        chai.assert.typeOf(result.getData, 'Function');
+        chai.assert.typeOf(result.setData, 'Function');
+        chai.assert.typeOf(result.deleteData, 'Function');
+        chai.assert.deepEqual(result.client, client);
+        chai.assert.typeOf(result.promiseFactory, 'Function');
+        chai.assert.deepEqual(result.promiseFactory, promiseFactory);
+
+        done();
+    }
+
+    function getDataFromEmpty() {
+        // arrange
+        var client = redis.createClient();
+        var redisAdapter = adapters.getClientAdapter(client, promiseFactory);
+
+        // act
+        return redisAdapter.getData()
+            // assert
+            .then(function() {
+                throw new Error('resolved but should be rejected!');
+            })
+            .catch(function(error) {
+                chai.assert.typeOf(error, 'Null');
+            });
+    }
+
+    function setData() {
+        // arrange
+        var client = redis.createClient();
+        var redisAdapter = adapters.getClientAdapter(client, promiseFactory);
+
+        // act
+        return redisAdapter.setData('aCoolKey', {a: true}, 10)
+            .then(function(result) {
+                // assert
+                chai.assert.typeOf(result, 'Number');
+            });
+    }
+
+    function setAndGetData() {
+        // arrange
+        var client = redis.createClient();
+        var redisAdapter = adapters.getClientAdapter(client, promiseFactory);
+        var cacheKey = 'hasA';
+
+        // act
+        return redisAdapter.setData(cacheKey, {a: true}, 10)
+            .then(redisAdapter.getData.bind(redisAdapter, cacheKey))
+            .then(function(result) {
+                // assert
+                chai.assert.typeOf(result, 'Object');
+                chai.assert.equal(result.a, true);
+            });
+    }
+
+    function setAndGetExpiredData() {
+        // arrange
+        var client = redis.createClient();
+        var redisAdapter = adapters.getClientAdapter(client, promiseFactory);
+        var cacheKey = 'hasA';
+
+        // act
+        return redisAdapter.setData(cacheKey, {a: true}, 0)
+            .then(waitPromise)
+            .then(redisAdapter.getData.bind(redisAdapter, cacheKey))
+            // assert
+            .then(function() {
+                throw new Error('resolved but should be rejected!');
+            })
+            .catch(function(error) {
+                chai.assert.typeOf(error, 'Null');
+            });
+    }
+
+    function deleteData() {
+        // arrange
+        var client = redis.createClient();
+        var redisAdapter = adapters.getClientAdapter(client, promiseFactory);
+        var cacheKey = 'numberOfCats';
+
+        // act
+        return redisAdapter.setData(cacheKey, 101, 100)
+            .then(redisAdapter.deleteData.bind(redisAdapter, cacheKey))
+            .then(function(result) {
+                chai.assert.ok(result);
+            });
+    }
+
+    function deleteAndGetData() {
+        // arrange
+        var client = redis.createClient();
+        var redisAdapter = adapters.getClientAdapter(client, promiseFactory);
+        var cacheKey = 'numberOfCats';
+
+        // act
+        return redisAdapter.setData(cacheKey, 101, 100)
+            .then(redisAdapter.deleteData.bind(redisAdapter, cacheKey))
+            .then(redisAdapter.getData.bind(redisAdapter, cacheKey))
+            // assert
+            .then(function() {
+                throw new Error('resolved but should be rejected!');
+            })
+            .catch(function(error) {
+                chai.assert.typeOf(error, 'Null');
+            });
+    }
+}
+
+function waitPromise() {
+    return new Promise(function(resolve) {
+        setTimeout(function() {
+            resolve(true);
+        }, 300);
+    });
+}
