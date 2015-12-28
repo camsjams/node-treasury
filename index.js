@@ -5,7 +5,7 @@ var adapters = require('./lib/adapters');
 
 function getDefaultOptions() {
     return {
-        client: new adapters.MemoryClientAdapter(null),
+        client: null,
         promiseFactory: nativePromise,
         ttl: tauist.s.fiveMinutes
     };

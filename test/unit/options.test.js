@@ -22,7 +22,7 @@ function testOptions() {
 
             // assert
             chai.assert.typeOf(result, 'Object');
-            chai.assert.typeOf(result.client, 'Object');
+            chai.assert.typeOf(result.client, 'Null');
             chai.assert.equal(result.ttl, 300);
             chai.assert.typeOf(result.promiseFactory, 'Function');
 
@@ -38,7 +38,7 @@ function testOptions() {
 
             // assert
             chai.assert.typeOf(result, 'Object');
-            chai.assert.typeOf(result.client, 'Object');
+            chai.assert.typeOf(result.client, 'Null');
             chai.assert.equal(result.ttl, 300);
             chai.assert.typeOf(result.promiseFactory, 'Function');
 
@@ -54,7 +54,7 @@ function testOptions() {
 
             // assert
             chai.assert.typeOf(result, 'Object');
-            chai.assert.typeOf(result.client, 'Object');
+            chai.assert.typeOf(result.client, 'Null');
             chai.assert.equal(result.ttl, 300);
             chai.assert.typeOf(result.promiseFactory, 'Function');
 
@@ -79,7 +79,7 @@ function testOptions() {
 
             // assert
             chai.assert.typeOf(result, 'Object');
-            chai.assert.typeOf(result.client, 'Object');
+            chai.assert.typeOf(result.client, 'Null');
             chai.assert.equal(result.ttl, 300);
             chai.assert.typeOf(result.promiseFactory, 'Function');
 
@@ -95,7 +95,7 @@ function testOptions() {
 
             // assert
             chai.assert.typeOf(result, 'Object');
-            chai.assert.typeOf(result.client, 'Object');
+            chai.assert.typeOf(result.client, 'Null');
             chai.assert.equal(result.ttl, 300);
             chai.assert.typeOf(result.promiseFactory, 'Function');
 
@@ -111,7 +111,7 @@ function testOptions() {
 
             // assert
             chai.assert.typeOf(result, 'Object');
-            chai.assert.typeOf(result.client, 'Object');
+            chai.assert.typeOf(result.client, 'Null');
             chai.assert.equal(result.ttl, 300);
             chai.assert.typeOf(result.promiseFactory, 'Function');
 

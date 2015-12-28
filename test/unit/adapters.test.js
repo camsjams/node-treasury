@@ -13,7 +13,8 @@ function testAdapters() {
 
     function testGetClientAdapter() {
         it('should throw error for undefined as invalid_client', undefClient);
-        it('should throw error for null as invalid_client', nullClient);
+        it('should throw error for falsy as invalid_client', falsyClient);
+        it('should return default client adapter', nullClient);
         it('should throw error for unknown as unknown_client', unknownClient);
 
         function undefClient(done) {
@@ -36,14 +37,14 @@ function testAdapters() {
             done();
         }
 
-        function nullClient(done) {
+        function falsyClient(done) {
             // arrange
             var result;
             var error;
 
             // act
             try {
-                result = adapters.getClientAdapter(null);
+                result = adapters.getClientAdapter(false);
             } catch (e) {
                 error = e;
             }
@@ -52,6 +53,21 @@ function testAdapters() {
             chai.assert.strictEqual(result, undefined);
             chai.assert.typeOf(error, 'Error');
             chai.assert.equal(error.message, 'invalid_client');
+
+            done();
+        }
+
+        function nullClient(done) {
+            // arrange
+            // act
+            var result = adapters.getClientAdapter(null);
+
+            // assert
+            chai.assert.typeOf(result, 'Object');
+            chai.assert.typeOf(result.get, 'Function');
+            chai.assert.typeOf(result.set, 'Function');
+            chai.assert.typeOf(result.delete, 'Function');
+            chai.assert.typeOf(result.client, 'Null');
 
             done();
         }
@@ -85,10 +101,8 @@ function testAdapters() {
 
         function getMemoryAdapter(done) {
             // arrange
-            var memoryClient = new adapters.MemoryClientAdapter(null);
-
             // act
-            var result = adapters.getClientAdapter(memoryClient);
+            var result = adapters.getClientAdapter(null);
 
             // assert
             chai.assert.typeOf(result, 'Object');
