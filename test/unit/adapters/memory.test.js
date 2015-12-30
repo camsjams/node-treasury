@@ -81,7 +81,7 @@ function testMemory() {
         var cacheKey = 'hasA';
 
         // act
-        return memoryAdapter.setData(cacheKey, {a: true}, 0)
+        return memoryAdapter.setData(cacheKey, {a: true}, 1)
             .then(waitPromise)
             .then(memoryAdapter.getData.bind(memoryAdapter, cacheKey))
             // assert

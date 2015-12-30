@@ -11,7 +11,7 @@ function testMemcached() {
     it('should return a memcached client adapter', getMemcachedAdapter);
     it('should reject when not found in cache', getDataFromEmpty);
     it('should set in cache', setData);
-    it.only('should set then get from cache', setAndGetData);
+    it('should set then get from cache', setAndGetData);
     it('should set then get bad data from cache', setAndGetExpiredData);
     it('should delete from cache', deleteData);
     it('should delete from cache and not get later', deleteAndGetData);
@@ -88,7 +88,7 @@ function testMemcached() {
         var cacheKey = 'setAndGetExpiredData';
 
         // act
-        return memcachedAdapter.setData(cacheKey, {a: true}, 0)
+        return memcachedAdapter.setData(cacheKey, {a: true}, 1)
             .then(waitPromise)
             .then(memcachedAdapter.getData.bind(memcachedAdapter, cacheKey))
             // assert
