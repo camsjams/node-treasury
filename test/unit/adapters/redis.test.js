@@ -25,9 +25,9 @@ function testRedis() {
 
         // assert
         chai.assert.typeOf(result, 'Object');
-        chai.assert.typeOf(result.getData, 'Function');
-        chai.assert.typeOf(result.setData, 'Function');
-        chai.assert.typeOf(result.deleteData, 'Function');
+        chai.assert.typeOf(result.get, 'Function');
+        chai.assert.typeOf(result.set, 'Function');
+        chai.assert.typeOf(result.del, 'Function');
         chai.assert.deepEqual(result.client, client);
         chai.assert.equal(result.constructor.name, 'RedisClientAdapter');
         chai.assert.typeOf(result.promiseFactory, 'Function');
@@ -42,7 +42,7 @@ function testRedis() {
         var redisAdapter = adapters.getClientAdapter(client, promiseFactory);
 
         // act
-        return redisAdapter.getData('newKey')
+        return redisAdapter.get('newKey')
             // assert
             .then(function() {
                 throw new Error('resolved but should be rejected!');
@@ -58,7 +58,7 @@ function testRedis() {
         var redisAdapter = adapters.getClientAdapter(client, promiseFactory);
 
         // act
-        return redisAdapter.setData('aCoolKey', {a: true}, 10)
+        return redisAdapter.set('aCoolKey', {a: true}, 10)
             .then(function(result) {
                 // assert
                 chai.assert.ok(result);
@@ -72,8 +72,8 @@ function testRedis() {
         var cacheKey = 'setAndGetData';
 
         // act
-        return redisAdapter.setData(cacheKey, {a: true}, 15)
-            .then(redisAdapter.getData.bind(redisAdapter, cacheKey))
+        return redisAdapter.set(cacheKey, {a: true}, 15)
+            .then(redisAdapter.get.bind(redisAdapter, cacheKey))
             .then(function(result) {
                 // assert
                 chai.assert.typeOf(result, 'Object');
@@ -88,9 +88,9 @@ function testRedis() {
         var cacheKey = 'setAndGetExpiredData';
 
         // act
-        return redisAdapter.setData(cacheKey, {a: true}, 1)
+        return redisAdapter.set(cacheKey, {a: true}, 1)
             .then(waitPromise)
-            .then(redisAdapter.getData.bind(redisAdapter, cacheKey))
+            .then(redisAdapter.get.bind(redisAdapter, cacheKey))
             // assert
             .then(function() {
                 throw new Error('resolved but should be rejected!');
@@ -107,8 +107,8 @@ function testRedis() {
         var cacheKey = 'numberOfCats:deleteData';
 
         // act
-        return redisAdapter.setData(cacheKey, 101, 100)
-            .then(redisAdapter.deleteData.bind(redisAdapter, cacheKey))
+        return redisAdapter.set(cacheKey, 101, 100)
+            .then(redisAdapter.del.bind(redisAdapter, cacheKey))
             .then(function(result) {
                 chai.assert.ok(result);
             });
@@ -121,9 +121,9 @@ function testRedis() {
         var cacheKey = 'numberOfCats:deleteAndGetData';
 
         // act
-        return redisAdapter.setData(cacheKey, 101, 100)
-            .then(redisAdapter.deleteData.bind(redisAdapter, cacheKey))
-            .then(redisAdapter.getData.bind(redisAdapter, cacheKey))
+        return redisAdapter.set(cacheKey, 101, 100)
+            .then(redisAdapter.del.bind(redisAdapter, cacheKey))
+            .then(redisAdapter.get.bind(redisAdapter, cacheKey))
             // assert
             .then(function() {
                 throw new Error('resolved but should be rejected!');

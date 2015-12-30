@@ -59,9 +59,9 @@ function testGetClientAdapter() {
 
         // assert
         chai.assert.typeOf(result, 'Object');
-        chai.assert.typeOf(result.getData, 'Function');
-        chai.assert.typeOf(result.setData, 'Function');
-        chai.assert.typeOf(result.deleteData, 'Function');
+        chai.assert.typeOf(result.get, 'Function');
+        chai.assert.typeOf(result.set, 'Function');
+        chai.assert.typeOf(result.delete, 'Function');
         chai.assert.typeOf(result.client, 'Null');
         chai.assert.typeOf(result.promiseFactory, 'Function');
         chai.assert.deepEqual(result.promiseFactory, promiseFactory);

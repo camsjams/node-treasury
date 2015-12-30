@@ -25,9 +25,9 @@ function testMemcached() {
 
         // assert
         chai.assert.typeOf(result, 'Object');
-        chai.assert.typeOf(result.getData, 'Function');
-        chai.assert.typeOf(result.setData, 'Function');
-        chai.assert.typeOf(result.deleteData, 'Function');
+        chai.assert.typeOf(result.get, 'Function');
+        chai.assert.typeOf(result.set, 'Function');
+        chai.assert.typeOf(result.del, 'Function');
         chai.assert.deepEqual(result.client, memcached);
         chai.assert.equal(result.constructor.name, 'MemcachedClientAdapter');
         chai.assert.typeOf(result.promiseFactory, 'Function');
@@ -42,7 +42,7 @@ function testMemcached() {
         var memcachedAdapter = adapters.getClientAdapter(client, promiseFactory);
 
         // act
-        return memcachedAdapter.getData('newKey')
+        return memcachedAdapter.get('newKey')
             // assert
             .then(function() {
                 throw new Error('resolved but should be rejected!');
@@ -58,7 +58,7 @@ function testMemcached() {
         var memcachedAdapter = adapters.getClientAdapter(client, promiseFactory);
 
         // act
-        return memcachedAdapter.setData('aCoolKey', {a: true}, 10)
+        return memcachedAdapter.set('aCoolKey', {a: true}, 10)
             .then(function(result) {
                 // assert
                 chai.assert.ok(result);
@@ -72,8 +72,8 @@ function testMemcached() {
         var cacheKey = 'setAndGetData';
 
         // act
-        return memcachedAdapter.setData(cacheKey, {a: true}, 10)
-            .then(memcachedAdapter.getData.bind(memcachedAdapter, cacheKey))
+        return memcachedAdapter.set(cacheKey, {a: true}, 10)
+            .then(memcachedAdapter.get.bind(memcachedAdapter, cacheKey))
             .then(function(result) {
                 // assert
                 chai.assert.typeOf(result, 'Object');
@@ -88,9 +88,9 @@ function testMemcached() {
         var cacheKey = 'setAndGetExpiredData';
 
         // act
-        return memcachedAdapter.setData(cacheKey, {a: true}, 1)
+        return memcachedAdapter.set(cacheKey, {a: true}, 1)
             .then(waitPromise)
-            .then(memcachedAdapter.getData.bind(memcachedAdapter, cacheKey))
+            .then(memcachedAdapter.get.bind(memcachedAdapter, cacheKey))
             // assert
             .then(function() {
                 throw new Error('resolved but should be rejected!');
@@ -107,8 +107,8 @@ function testMemcached() {
         var cacheKey = 'numberOfCats_deleteData';
 
         // act
-        return memcachedAdapter.setData(cacheKey, 101, 100)
-            .then(memcachedAdapter.deleteData.bind(memcachedAdapter, cacheKey))
+        return memcachedAdapter.set(cacheKey, 101, 100)
+            .then(memcachedAdapter.del.bind(memcachedAdapter, cacheKey))
             .then(function(result) {
                 chai.assert.ok(result);
             });
@@ -121,9 +121,9 @@ function testMemcached() {
         var cacheKey = 'numberOfCats_deleteAndGetData';
 
         // act
-        return memcachedAdapter.setData(cacheKey, 101, 100)
-            .then(memcachedAdapter.deleteData.bind(memcachedAdapter, cacheKey))
-            .then(memcachedAdapter.getData.bind(memcachedAdapter, cacheKey))
+        return memcachedAdapter.set(cacheKey, 101, 100)
+            .then(memcachedAdapter.del.bind(memcachedAdapter, cacheKey))
+            .then(memcachedAdapter.get.bind(memcachedAdapter, cacheKey))
             // assert
             .then(function() {
                 throw new Error('resolved but should be rejected!');

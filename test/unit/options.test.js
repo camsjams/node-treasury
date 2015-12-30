@@ -24,6 +24,7 @@ function testOptions() {
             chai.assert.typeOf(result, 'Object');
             chai.assert.typeOf(result.client, 'Null');
             chai.assert.equal(result.ttl, 300);
+            chai.assert.equal(result.namespace, 'Treasury');
             chai.assert.typeOf(result.promiseFactory, 'Function');
 
             done();
@@ -40,6 +41,7 @@ function testOptions() {
             chai.assert.typeOf(result, 'Object');
             chai.assert.typeOf(result.client, 'Null');
             chai.assert.equal(result.ttl, 300);
+            chai.assert.equal(result.namespace, 'Treasury');
             chai.assert.typeOf(result.promiseFactory, 'Function');
 
             done();
@@ -56,6 +58,7 @@ function testOptions() {
             chai.assert.typeOf(result, 'Object');
             chai.assert.typeOf(result.client, 'Null');
             chai.assert.equal(result.ttl, 300);
+            chai.assert.equal(result.namespace, 'Treasury');
             chai.assert.typeOf(result.promiseFactory, 'Function');
 
             done();
@@ -67,6 +70,7 @@ function testOptions() {
         it('should accept null options', nullOpts);
         it('should accept empty options', emptyOpts);
         it('should accept a ttl', customDefaultTtl);
+        it('should accept a namespace', customDefaultNamespace);
         it('should accept a client', customClient);
         it('should accept a promise', customPromise);
 
@@ -81,6 +85,7 @@ function testOptions() {
             chai.assert.typeOf(result, 'Object');
             chai.assert.typeOf(result.client, 'Null');
             chai.assert.equal(result.ttl, 300);
+            chai.assert.equal(result.namespace, 'Treasury');
             chai.assert.typeOf(result.promiseFactory, 'Function');
 
             done();
@@ -97,6 +102,7 @@ function testOptions() {
             chai.assert.typeOf(result, 'Object');
             chai.assert.typeOf(result.client, 'Null');
             chai.assert.equal(result.ttl, 300);
+            chai.assert.equal(result.namespace, 'Treasury');
             chai.assert.typeOf(result.promiseFactory, 'Function');
 
             done();
@@ -113,6 +119,7 @@ function testOptions() {
             chai.assert.typeOf(result, 'Object');
             chai.assert.typeOf(result.client, 'Null');
             chai.assert.equal(result.ttl, 300);
+            chai.assert.equal(result.namespace, 'Treasury');
             chai.assert.typeOf(result.promiseFactory, 'Function');
 
             done();
@@ -128,6 +135,20 @@ function testOptions() {
             // assert
             chai.assert.typeOf(result, 'Object');
             chai.assert.equal(result.ttl, 1337);
+
+            done();
+        }
+
+        function customDefaultNamespace(done) {
+            // arrange
+            var getCleanedOptions = Treasury.__get__('getCleanedOptions');
+
+            // act
+            var result = getCleanedOptions({namespace: 'ScroogeMcDuck'});
+
+            // assert
+            chai.assert.typeOf(result, 'Object');
+            chai.assert.equal(result.namespace, 'ScroogeMcDuck');
 
             done();
         }

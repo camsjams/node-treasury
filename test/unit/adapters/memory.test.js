@@ -22,9 +22,9 @@ function testMemory() {
 
         // assert
         chai.assert.typeOf(result, 'Object');
-        chai.assert.typeOf(result.getData, 'Function');
-        chai.assert.typeOf(result.setData, 'Function');
-        chai.assert.typeOf(result.deleteData, 'Function');
+        chai.assert.typeOf(result.get, 'Function');
+        chai.assert.typeOf(result.set, 'Function');
+        chai.assert.typeOf(result.del, 'Function');
         chai.assert.typeOf(result.client, 'Null');
         chai.assert.equal(result.constructor.name, 'MemoryClientAdapter');
         chai.assert.typeOf(result.promiseFactory, 'Function');
@@ -38,7 +38,7 @@ function testMemory() {
         var memoryAdapter = adapters.getClientAdapter(null, promiseFactory);
 
         // act
-        return memoryAdapter.getData('newKey')
+        return memoryAdapter.get('newKey')
             // assert
             .then(function() {
                 throw new Error('resolved but should be rejected!');
@@ -53,7 +53,7 @@ function testMemory() {
         var memoryAdapter = adapters.getClientAdapter(null, promiseFactory);
 
         // act
-        return memoryAdapter.setData('aCoolKey', {a: true}, 10)
+        return memoryAdapter.set('aCoolKey', {a: true}, 10)
             .then(function(result) {
                 // assert
                 chai.assert.ok(result);
@@ -66,8 +66,8 @@ function testMemory() {
         var cacheKey = 'hasA';
 
         // act
-        return memoryAdapter.setData(cacheKey, {a: true}, 10)
-            .then(memoryAdapter.getData.bind(memoryAdapter, cacheKey))
+        return memoryAdapter.set(cacheKey, {a: true}, 10)
+            .then(memoryAdapter.get.bind(memoryAdapter, cacheKey))
             .then(function(result) {
                 // assert
                 chai.assert.typeOf(result, 'Object');
@@ -81,9 +81,9 @@ function testMemory() {
         var cacheKey = 'hasA';
 
         // act
-        return memoryAdapter.setData(cacheKey, {a: true}, 1)
+        return memoryAdapter.set(cacheKey, {a: true}, 1)
             .then(waitPromise)
-            .then(memoryAdapter.getData.bind(memoryAdapter, cacheKey))
+            .then(memoryAdapter.get.bind(memoryAdapter, cacheKey))
             // assert
             .then(function() {
                 throw new Error('resolved but should be rejected!');
@@ -99,8 +99,8 @@ function testMemory() {
         var cacheKey = 'numberOfCats';
 
         // act
-        return memoryAdapter.setData(cacheKey, 101, 100)
-            .then(memoryAdapter.deleteData.bind(memoryAdapter, cacheKey))
+        return memoryAdapter.set(cacheKey, 101, 100)
+            .then(memoryAdapter.del.bind(memoryAdapter, cacheKey))
             .then(function(result) {
                 chai.assert.ok(result);
             });
@@ -112,9 +112,9 @@ function testMemory() {
         var cacheKey = 'numberOfCats';
 
         // act
-        return memoryAdapter.setData(cacheKey, 101, 100)
-            .then(memoryAdapter.deleteData.bind(memoryAdapter, cacheKey))
-            .then(memoryAdapter.getData.bind(memoryAdapter, cacheKey))
+        return memoryAdapter.set(cacheKey, 101, 100)
+            .then(memoryAdapter.del.bind(memoryAdapter, cacheKey))
+            .then(memoryAdapter.get.bind(memoryAdapter, cacheKey))
             // assert
             .then(function() {
                 throw new Error('resolved but should be rejected!');
