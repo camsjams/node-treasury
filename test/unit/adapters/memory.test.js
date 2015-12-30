@@ -26,6 +26,7 @@ function testMemory() {
         chai.assert.typeOf(result.setData, 'Function');
         chai.assert.typeOf(result.deleteData, 'Function');
         chai.assert.typeOf(result.client, 'Null');
+        chai.assert.equal(result.constructor.name, 'MemoryClientAdapter');
         chai.assert.typeOf(result.promiseFactory, 'Function');
         chai.assert.deepEqual(result.promiseFactory, promiseFactory);
 
@@ -37,7 +38,7 @@ function testMemory() {
         var memoryAdapter = adapters.getClientAdapter(null, promiseFactory);
 
         // act
-        return memoryAdapter.getData()
+        return memoryAdapter.getData('newKey')
             // assert
             .then(function() {
                 throw new Error('resolved but should be rejected!');
@@ -55,7 +56,7 @@ function testMemory() {
         return memoryAdapter.setData('aCoolKey', {a: true}, 10)
             .then(function(result) {
                 // assert
-                chai.assert.typeOf(result, 'Number');
+                chai.assert.ok(result);
             });
     }
 

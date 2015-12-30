@@ -9,12 +9,12 @@ describe('Test redis client and adapter', testRedis);
 
 function testRedis() {
     it('should return a redis client adapter', getRedisAdapter);
-    //it('should reject when not found in cache', getDataFromEmpty);
-    //it('should set in cache', setData);
-    //it('should set then get from cache', setAndGetData);
-    //it('should set then get bad data from cache', setAndGetExpiredData);
-    //it('should delete from cache', deleteData);
-    //it('should delete from cache and not get later', deleteAndGetData);
+    it('should reject when not found in cache', getDataFromEmpty);
+    it('should set in cache', setData);
+    it('should set then get from cache', setAndGetData);
+    it('should set then get bad data from cache', setAndGetExpiredData);
+    it('should delete from cache', deleteData);
+    it('should delete from cache and not get later', deleteAndGetData);
 
     function getRedisAdapter(done) {
         // arrange
@@ -29,6 +29,7 @@ function testRedis() {
         chai.assert.typeOf(result.setData, 'Function');
         chai.assert.typeOf(result.deleteData, 'Function');
         chai.assert.deepEqual(result.client, client);
+        chai.assert.equal(result.constructor.name, 'RedisClientAdapter');
         chai.assert.typeOf(result.promiseFactory, 'Function');
         chai.assert.deepEqual(result.promiseFactory, promiseFactory);
 
@@ -41,7 +42,7 @@ function testRedis() {
         var redisAdapter = adapters.getClientAdapter(client, promiseFactory);
 
         // act
-        return redisAdapter.getData()
+        return redisAdapter.getData('newKey')
             // assert
             .then(function() {
                 throw new Error('resolved but should be rejected!');
@@ -60,7 +61,7 @@ function testRedis() {
         return redisAdapter.setData('aCoolKey', {a: true}, 10)
             .then(function(result) {
                 // assert
-                chai.assert.typeOf(result, 'Number');
+                chai.assert.ok(result);
             });
     }
 
@@ -68,10 +69,10 @@ function testRedis() {
         // arrange
         var client = redis.createClient();
         var redisAdapter = adapters.getClientAdapter(client, promiseFactory);
-        var cacheKey = 'hasA';
+        var cacheKey = 'setAndGetData';
 
         // act
-        return redisAdapter.setData(cacheKey, {a: true}, 10)
+        return redisAdapter.setData(cacheKey, {a: true}, 15)
             .then(redisAdapter.getData.bind(redisAdapter, cacheKey))
             .then(function(result) {
                 // assert
@@ -84,10 +85,10 @@ function testRedis() {
         // arrange
         var client = redis.createClient();
         var redisAdapter = adapters.getClientAdapter(client, promiseFactory);
-        var cacheKey = 'hasA';
+        var cacheKey = 'setAndGetExpiredData';
 
         // act
-        return redisAdapter.setData(cacheKey, {a: true}, 0)
+        return redisAdapter.setData(cacheKey, {a: true}, 1)
             .then(waitPromise)
             .then(redisAdapter.getData.bind(redisAdapter, cacheKey))
             // assert
@@ -103,7 +104,7 @@ function testRedis() {
         // arrange
         var client = redis.createClient();
         var redisAdapter = adapters.getClientAdapter(client, promiseFactory);
-        var cacheKey = 'numberOfCats';
+        var cacheKey = 'numberOfCats:deleteData';
 
         // act
         return redisAdapter.setData(cacheKey, 101, 100)
@@ -117,7 +118,7 @@ function testRedis() {
         // arrange
         var client = redis.createClient();
         var redisAdapter = adapters.getClientAdapter(client, promiseFactory);
-        var cacheKey = 'numberOfCats';
+        var cacheKey = 'numberOfCats:deleteAndGetData';
 
         // act
         return redisAdapter.setData(cacheKey, 101, 100)
@@ -137,6 +138,6 @@ function waitPromise() {
     return new Promise(function(resolve) {
         setTimeout(function() {
             resolve(true);
-        }, 300);
+        }, 1000);
     });
 }

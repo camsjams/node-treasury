@@ -9,12 +9,12 @@ describe('Test Memcached client and adapter', testMemcached);
 
 function testMemcached() {
     it('should return a memcached client adapter', getMemcachedAdapter);
-    //it('should reject when not found in cache', getDataFromEmpty);
-    //it('should set in cache', setData);
-    //it('should set then get from cache', setAndGetData);
-    //it('should set then get bad data from cache', setAndGetExpiredData);
-    //it('should delete from cache', deleteData);
-    //it('should delete from cache and not get later', deleteAndGetData);
+    it('should reject when not found in cache', getDataFromEmpty);
+    it('should set in cache', setData);
+    it.only('should set then get from cache', setAndGetData);
+    it('should set then get bad data from cache', setAndGetExpiredData);
+    it('should delete from cache', deleteData);
+    it('should delete from cache and not get later', deleteAndGetData);
 
     function getMemcachedAdapter(done) {
         // arrange
@@ -29,6 +29,7 @@ function testMemcached() {
         chai.assert.typeOf(result.setData, 'Function');
         chai.assert.typeOf(result.deleteData, 'Function');
         chai.assert.deepEqual(result.client, memcached);
+        chai.assert.equal(result.constructor.name, 'MemcachedClientAdapter');
         chai.assert.typeOf(result.promiseFactory, 'Function');
         chai.assert.deepEqual(result.promiseFactory, promiseFactory);
 
@@ -41,7 +42,7 @@ function testMemcached() {
         var memcachedAdapter = adapters.getClientAdapter(client, promiseFactory);
 
         // act
-        return memcachedAdapter.getData()
+        return memcachedAdapter.getData('newKey')
             // assert
             .then(function() {
                 throw new Error('resolved but should be rejected!');
@@ -60,7 +61,7 @@ function testMemcached() {
         return memcachedAdapter.setData('aCoolKey', {a: true}, 10)
             .then(function(result) {
                 // assert
-                chai.assert.typeOf(result, 'Number');
+                chai.assert.ok(result);
             });
     }
 
@@ -68,7 +69,7 @@ function testMemcached() {
         // arrange
         var client = new Memcached();
         var memcachedAdapter = adapters.getClientAdapter(client, promiseFactory);
-        var cacheKey = 'hasA';
+        var cacheKey = 'setAndGetData';
 
         // act
         return memcachedAdapter.setData(cacheKey, {a: true}, 10)
@@ -84,7 +85,7 @@ function testMemcached() {
         // arrange
         var client = new Memcached();
         var memcachedAdapter = adapters.getClientAdapter(client, promiseFactory);
-        var cacheKey = 'hasA';
+        var cacheKey = 'setAndGetExpiredData';
 
         // act
         return memcachedAdapter.setData(cacheKey, {a: true}, 0)
@@ -103,7 +104,7 @@ function testMemcached() {
         // arrange
         var client = new Memcached();
         var memcachedAdapter = adapters.getClientAdapter(client, promiseFactory);
-        var cacheKey = 'numberOfCats';
+        var cacheKey = 'numberOfCats_deleteData';
 
         // act
         return memcachedAdapter.setData(cacheKey, 101, 100)
@@ -117,7 +118,7 @@ function testMemcached() {
         // arrange
         var client = new Memcached();
         var memcachedAdapter = adapters.getClientAdapter(client, promiseFactory);
-        var cacheKey = 'numberOfCats';
+        var cacheKey = 'numberOfCats_deleteAndGetData';
 
         // act
         return memcachedAdapter.setData(cacheKey, 101, 100)
@@ -137,6 +138,6 @@ function waitPromise() {
     return new Promise(function(resolve) {
         setTimeout(function() {
             resolve(true);
-        }, 300);
+        }, 1000);
     });
 }
