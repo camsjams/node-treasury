@@ -48,18 +48,15 @@ function Treasury(opts) {
         var key = getKey(arguments);
         var ttl = ~~(options.ttl || config.ttl);
 
+        // todo refactor
         return client.get(key)
             .catch(function notFoundInCache(error) {
-                console.log('not found in cache');
                 return thePromise
                   .then(function(value) {
-                    console.log('the intended promise is completed', arguments);
-                    return client.set(key, value, ttl);
-                  })
-            })
-            .then(function finalValue() {
-                  console.log('finalValue the promise is completed', arguments);
-            })
+                    return client.set(key, value, ttl)
+                    .then(function(){return value;});
+                  });
+            });
 
 
         return config.promiseFactory(function(resolve, reject) {

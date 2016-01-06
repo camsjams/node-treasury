@@ -8,20 +8,21 @@ function testMainApi() {
     describe('#testDivest', testDivest);
 
     function testInvest() {
-        it('should get value from promise directly', notCached);
+        it.only('should get value from promise directly', notCached);
 
         function notCached() {
             // arrange
             var treasury = new Treasury();
+            var expected = 'I made a promise Mr. Frodo.';
             var samplePromise = new Promise(function(resolve) {
-                resolve('I made a promise Mr. Frodo.');
-              });
+                resolve(expected);
+            });
 
             // act
             return treasury.invest(samplePromise)
-              .then(function() {
+              .then(function(value) {
                 // assert
-                console.log('then', arguments);
+                chai.assert.equal(value, expected);
               });
         }
 
