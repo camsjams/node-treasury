@@ -52,37 +52,27 @@ function Treasury(opts) {
         // end consumer handles all catches!
 
         var ns = options.namespace || config.namespace;
-        var ttl = ~~(options.ttl || config.ttl);
         var key = getKey(options, ns);
+        var ttl = ~~(options.ttl || config.ttl);
 
         console.log('using key:', key);
 
         // todo refactor
         return client.get(key)
             .catch(function notFoundInCache(error) {
-                return thePromise
+                return thePromise(options)
                   .then(function(value) {
                     return client.set(key, value, ttl)
                     .then(function(){return value;});
                   });
             });
-
-
-        return config.promiseFactory(function(resolve, reject) {
-            thePromise
-                .then(function() {
-                    resolve();
-                })
-                .catch(function() {
-                    reject();
-                });
-        });
     }
 
-    function divest() {
-        return config.promiseFactory(function(resolve, reject) {
-            resolve();
-        });
+    function divest(options) {
+        var ns = options.namespace || config.namespace;
+        var key = getKey(options, ns);
+        console.log('del key:', key);
+        return client.del(key);
     }
 }
 
