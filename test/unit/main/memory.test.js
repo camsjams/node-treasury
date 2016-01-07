@@ -1,5 +1,5 @@
 var chai = require('chai');
-var Treasury = require('../../index');
+var Treasury = require('../../../index');
 
 describe('Test main Treasury public API using memory', testMainApi);
 
@@ -10,6 +10,7 @@ function testMainApi() {
     function testInvest() {
         it('should get value from promise directly', notCached);
         it('should get value from cache', isCached);
+        it.only('should get same value with same options in different order', optionsInDiffOrder);
 
         function notCached() {
             // arrange
@@ -48,6 +49,34 @@ function testMainApi() {
                 // assert
                 chai.assert.equal(value, expected);
               });
+        }
+
+        function optionsInDiffOrder() {
+          // arrange
+          var treasury = new Treasury();
+          var opts1 = {namespace: 'optionsInDiffOrder', cat:'Movies', ttl: 400};
+          var opts2 = {ttl: 400,namespace: 'optionsInDiffOrder', cat:'Movies'};
+          var expected = 31337;
+          var wasSecondPromiseCalled = false;
+          var firstPromise = function(){ return new Promise(function(resolve) {
+            expected = parseInt(Math.random() * 1000);
+              resolve(expected);
+          })
+        };
+          var secondPromise = function(){return new Promise(function(resolve) {
+              wasSecondPromiseCalled = true;
+              resolve(Math.random() * 1000);
+          })
+        };
+
+          // act
+          return treasury.invest(firstPromise, opts1)
+            .then(treasury.invest.bind(null, secondPromise, opts2))
+            .then(function(value) {
+              // assert
+              chai.assert.equal(value, expected);
+              chai.assert.notOk(wasSecondPromiseCalled);
+            });
         }
 
     }
