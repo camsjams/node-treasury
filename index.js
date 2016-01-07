@@ -1,12 +1,16 @@
 'use strict';
 
+const DEFAULT_NAMESPACE = 'Treasury';
+
 var tauist = require('tauist');
+var crypto = require('crypto');
+
 var adapters = require('./lib/adapters');
 
 function getDefaultOptions() {
     return {
         client: null,
-        namespace: 'Treasury',
+        namespace: DEFAULT_NAMESPACE,
         promiseFactory: nativePromise,
         ttl: tauist.s.fiveMinutes
     };
@@ -20,8 +24,10 @@ function nativePromise(resolver) {
     return new Promise(resolver);
 }
 
-function getKey(originalParameters, namespace) {
-    return namespace + JSON.stringify(originalParameters);
+function getKey(fnParams, namespace) {
+    namespace = (namespace || DEFAULT_NAMESPACE) + ':';
+    fnParams = JSON.stringify(fnParams || {});
+    return namespace + crypto.createHash("md5").update(fnParams).digest("hex");
 }
 
 function Treasury(opts) {
@@ -45,8 +51,11 @@ function Treasury(opts) {
         // ---------- return data via promise
         // end consumer handles all catches!
 
-        var key = getKey(arguments);
+        var ns = options.namespace || config.namespace;
         var ttl = ~~(options.ttl || config.ttl);
+        var key = getKey(options, ns);
+
+        console.log('using key:', key);
 
         // todo refactor
         return client.get(key)
