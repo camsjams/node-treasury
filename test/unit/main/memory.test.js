@@ -19,7 +19,7 @@ function testMainApi() {
             var samplePromise = function() {
                 return new Promise(function(resolve) {
                     resolve(expected);
-                })
+                });
             };
 
             // act
@@ -33,17 +33,17 @@ function testMainApi() {
         function isCached() {
             // arrange
             var treasury = new Treasury();
-            var opts = {namespace: 'isCachedTest'}
+            var opts = {namespace: 'isCachedTest'};
             var expected = 31337;
             var firstPromise = function() {
                 return new Promise(function(resolve) {
                     resolve(expected);
-                })
+                });
             };
             var secondPromise = function() {
                 return new Promise(function(resolve) {
                     resolve(12345);
-                })
+                });
             };
 
             // act
@@ -66,13 +66,13 @@ function testMainApi() {
                 return new Promise(function(resolve) {
                     expected = parseInt(Math.random() * 1000);
                     resolve(expected);
-                })
+                });
             };
             var secondPromise = function() {
                 return new Promise(function(resolve) {
                     wasSecondPromiseCalled = true;
                     resolve(Math.random() * 1000);
-                })
+                });
             };
 
             // act
@@ -108,7 +108,7 @@ function testMainApi() {
             var firstPromise = function() {
                 return new Promise(function(resolve) {
                     resolve(31337);
-                })
+                });
             };
             var secondPromise = function(options) {
                 return new Promise(function(resolve) {

@@ -58,7 +58,7 @@ function Treasury(opts) {
 
         // todo refactor
         return client.get(key)
-            .catch(function notFoundInCache(error) {
+            .catch(function notFoundInCache() {
                 return thePromise(options)
                     .then(function(value) {
                         return client.set(key, value, ttl)
