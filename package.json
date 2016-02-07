@@ -4,7 +4,7 @@
   "description": "Check your caching layer before running your promises",
   "main": "index.js",
   "scripts": {
-    "test": "mocha test/unit/*.test.js test/unit/**/*.test.js",
+    "test": "mocha test/code/*.test.js test/code/**/*.test.js",
     "lint": "jshint .",
     "style": "jscs ."
   },
