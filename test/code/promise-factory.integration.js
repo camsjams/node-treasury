@@ -34,7 +34,7 @@ function testPromiseFactories() {
 
         function basicPromise(done) {
             // arrange
-            var treasury = new Treasury(require('q').Promise);
+            var treasury = new Treasury({promiseFactory: require('q').Promise});
 
             // act
             var result = treasury.invest(promiseBeingMade);
@@ -51,7 +51,7 @@ function testPromiseFactories() {
 
         function basicPromise(done) {
             // arrange
-            var treasury = new Treasury(require('bluebird'));
+            var treasury = new Treasury({promiseFactory: require('bluebird')});
 
             // act
             var result = treasury.invest(promiseBeingMade);

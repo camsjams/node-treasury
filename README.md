@@ -15,6 +15,7 @@ develop:
 * [Node Redis](https://github.com/NodeRedis/node_redis)
 * [Memcached](http://memcached.org/)
 * [Memcached node client](https://github.com/3rd-Eden/memcached)
+* [Tauist](https://github.com/camsjams/node-tauist)
 
 ## Currently supported cache adapters
 * in memory storage
@@ -23,10 +24,47 @@ develop:
 
 ## Usage
 
-### Options
+### Constructor Options
 ``` js
-var key = 'MyModel:' + id;
+var Treasury = require('node-treasury');
+
+// default options for main class wrapper
+var treasury = new Treasury({
+    client: null,
+    namespace: 'Treasury',
+    promiseFactory: Promise, // defaults to native promise
+    ttl: tauist.s.fiveMinutes
+});
 ```
+
+#### option: client
+If null, Treasury will default to in-memory cache with managed expiration.
+
+You can also pass a redis or memcached client in:
+``` js
+var Memcached = require('memcached');
+var client = new Memcached();
+// please see adapters section for all currently supported adapters
+var redis = require('redis');
+var client = redis.createClient();
+
+var treasury = new Treasury({client: client});
+```
+
+#### option: namespace
+This is used to set the namespace in the event that the `invest` function is invoked without a namespace option.
+
+#### option: promiseFactory
+This is used to set the type of `Promise` used, and defaults to native `Promise` class. Treasury is also tested with Q and Bluebird promises.
+``` js
+// using Bluebird
+var treasury = new Treasury({promiseFactory: require('bluebird')});
+// using q js
+var treasury = new Treasury({promiseFactory: require('q').Promise});
+```
+
+#### option: ttl
+The default time-to-live for any cached objects, which will be used in the event that the `invest` function is invoked without a ttl option. It is recommended to utilize the [Tauist](https://github.com/camsjams/node-tauist) package to ease your reuse of expiration amounts.
 
 ### Basic usage - see full code in the [examples](examples)
 Here is a basic sample of "before" code using redis cache.

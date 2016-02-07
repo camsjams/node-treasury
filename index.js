@@ -50,7 +50,7 @@ function Treasury(opts) {
         // ------ if promise successful
         // -------- set to cache
         // ---------- return data via promise
-        // end consumer handles all catches!
+        // end consumer handles all catches except cache failure!
 
         var ns = options.namespace || config.namespace;
         var key = getKey(options, ns);

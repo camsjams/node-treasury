@@ -2,7 +2,6 @@ var redis = require('redis');
 var Treasury = require('../../index');
 var cacheClient = redis.createClient();
 var treasury = new Treasury({client: cacheClient});
-var stringify = require('json-stable-stringify');
 
 function doTheThingToReallyGetData(id) {
     return new Promise(function(resolve, reject) {
