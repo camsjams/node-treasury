@@ -72,7 +72,6 @@ function Treasury(opts) {
     function divest(options) {
         var ns = options.namespace || config.namespace;
         var key = getKey(options, ns);
-        console.log('del key:', key);
         return client.del(key);
     }
 }

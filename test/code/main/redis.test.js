@@ -1,5 +1,7 @@
 var chai = require('chai');
 var Treasury = require('../../../index');
+var redis = require('redis');
+var client = redis.createClient();
 
 describe('Test main Treasury public API using redis', testMainApi);
 
@@ -14,7 +16,7 @@ function testMainApi() {
 
         function notCached() {
             // arrange
-            var treasury = new Treasury();
+            var treasury = new Treasury({client: client});
             var expected = 'I made a promise Mr. Frodo.';
             var samplePromise = function() {
                 return new Promise(function(resolve) {
@@ -32,8 +34,8 @@ function testMainApi() {
 
         function isCached() {
             // arrange
-            var treasury = new Treasury();
-            var opts = {namespace: 'isCachedTest'};
+            var treasury = new Treasury({client: client});
+            var opts = {namespace: 'isCachedTest', ttl: 25};
             var expected = 31337;
             var firstPromise = function() {
                 return new Promise(function(resolve) {
@@ -57,9 +59,9 @@ function testMainApi() {
 
         function optionsInDiffOrder() {
             // arrange
-            var treasury = new Treasury();
-            var opts1 = {namespace: 'optionsInDiffOrder', cat: 'Movies', ttl: 400};
-            var opts2 = {ttl: 400, namespace: 'optionsInDiffOrder', cat: 'Movies'};
+            var treasury = new Treasury({client: client});
+            var opts1 = {namespace: 'optionsInDiffOrder', cat: 'Movies', ttl: 25};
+            var opts2 = {ttl: 25, namespace: 'optionsInDiffOrder', cat: 'Movies'};
             var expected = 31337;
             var wasSecondPromiseCalled = false;
             var firstPromise = function() {
@@ -93,8 +95,8 @@ function testMainApi() {
 
         function notCached() {
             // arrange
-            var treasury = new Treasury();
-            var opts = {namespace: 'del_notCached'};
+            var treasury = new Treasury({client: client});
+            var opts = {namespace: 'del_notCached', ttl: 25};
 
             // act
             return treasury.divest(opts);
@@ -102,8 +104,8 @@ function testMainApi() {
 
         function delCached() {
             // arrange
-            var treasury = new Treasury();
-            var opts = {namespace: 'delCached', addValue: 2};
+            var treasury = new Treasury({client: client});
+            var opts = {namespace: 'delCached', addValue: 2, ttl: 25};
             var expected = 42;
             var firstPromise = function() {
                 return new Promise(function(resolve) {
