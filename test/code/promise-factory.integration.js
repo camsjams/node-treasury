@@ -8,58 +8,58 @@ function testPromiseFactories() {
     describe('#testQ', testQ);
     describe('#testBluebird', testBluebird);
 
-    var promiseBeingMade = new Promise(function(resolve) {
-        resolve(true);
-    });
+    var expected = 12345;
+
+    function samplePromisedValue() {
+        return new Promise(function(resolve) {
+            resolve(expected);
+        });
+    }
 
     function testNative() {
-        var treasury = new Treasury();
-
         it('should return a Promise', basicPromise);
 
-        function basicPromise(done) {
+        function basicPromise() {
             // arrange
+            var treasury = new Treasury();
             // act
-            var result = treasury.invest(promiseBeingMade);
-
-            // assert
-            chai.assert.typeOf(result, 'Promise');
-
-            done();
+            return treasury.invest(samplePromisedValue)
+                .then(function(result) {
+                    // assert
+                    chai.assert.equal(result, expected);
+                });
         }
     }
 
     function testQ() {
         it('should return a Q Promise', basicPromise);
 
-        function basicPromise(done) {
+        function basicPromise() {
             // arrange
-            var treasury = new Treasury(require('q').Promise);
+            var treasury = new Treasury({promiseFactory: require('q').Promise});
 
             // act
-            var result = treasury.invest(promiseBeingMade);
-
-            // assert
-            chai.assert.typeOf(result, 'Promise');
-
-            done();
+            return treasury.invest(samplePromisedValue)
+                .then(function(result) {
+                    // assert
+                    chai.assert.equal(result, expected);
+                });
         }
     }
 
     function testBluebird() {
         it('should return a Bluebird Promise', basicPromise);
 
-        function basicPromise(done) {
+        function basicPromise() {
             // arrange
-            var treasury = new Treasury(require('bluebird'));
+            var treasury = new Treasury({promiseFactory: require('bluebird')});
 
             // act
-            var result = treasury.invest(promiseBeingMade);
-
-            // assert
-            chai.assert.typeOf(result, 'Promise');
-
-            done();
+            return treasury.invest(samplePromisedValue)
+                .then(function(result) {
+                    // assert
+                    chai.assert.equal(result, expected);
+                });
         }
     }
 }

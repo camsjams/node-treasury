@@ -50,20 +50,19 @@ function Treasury(opts) {
         // ------ if promise successful
         // -------- set to cache
         // ---------- return data via promise
-        // end consumer handles all catches!
+        // end consumer handles all catches except cache failure!
 
         var ns = options.namespace || config.namespace;
         var key = getKey(options, ns);
         var ttl = ~~(options.ttl || config.ttl);
 
-        // todo refactor
         return client.get(key)
             .catch(function notFoundInCache() {
                 return thePromise(options)
-                    .then(function(value) {
-                        return client.set(key, value, ttl)
+                    .then(function(promisedValue) {
+                        return client.set(key, promisedValue, ttl)
                             .then(function() {
-                                return value;
+                                return promisedValue;
                             });
                     });
             });
