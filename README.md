@@ -66,8 +66,10 @@ var treasury = new Treasury({promiseFactory: require('q').Promise});
 #### option: ttl
 The default time-to-live for any cached objects, which will be used in the event that the `invest` function is invoked without a ttl option. It is recommended to utilize the [Tauist](https://github.com/camsjams/node-tauist) package to ease your reuse of expiration amounts.
 
-### invest(thePromise, options)
-The first parameter is the promise that you wish to wrap get from cache, or set on when successfully resolved.
+### Treasury.invest(thePromise, options)
+The `invest` function is used to wrap cache logic around a Promise, where the cache provider is checked for the data first before running the code for the promised value. If the cache cannot retrieve the data, the Promise is invoked and then the successfully promised value is stored in cache for later use.
+
+The first parameter is the promise that you wish to wrap with this logic.
 ``` js
 treasury.invest(doTheThingToReallyGetData);
 ```
@@ -85,13 +87,24 @@ This is used to set the namespace for this wrapped Promise. It will fall back to
 #### option: ttl
 This is used to set the time-to-live for this wrapped Promise. It will fall back to the default Treasury default ttl option if not set.
 
-### invest() arguments with bind
+### using invest() with bind
 When using the `Function.prototype.bind()` method to curry a new function with some arguments, please advise that you need to pass these into the options parameter in order for Treasury to properly differentiate that invocation compared to others.
 
 In this example, `id` is the main parameter to `doTheThingToReallyGetData`, so it is bound for the Promise to be called. Additionally it is passed as a property to the options object to identify it for a unique cache later on.
 ``` js
 treasury.invest(doTheThingToReallyGetData.bind(null, id), {id: id});
 ```
+
+### Treasury.divest(options)
+The `divest` function is used to manually delete or invalidate a cached item. It expects the same `options` object used by the `invest` function in order to find the proper row of data to remove.
+``` js
+treasury.divest({
+    namespace: 'aCustomCachePrefix',
+    ttl: 'in minutes'
+});
+```
+#### option: namespace
+This is used to find the namespace for this wrapped Promise. It will fall back to the default Treasury namespace option if not set.
 
 ### Basic usage - see full code in the [examples](examples)
 Here is a basic sample of "before" code using redis cache.
