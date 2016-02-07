@@ -4,6 +4,7 @@ const DEFAULT_NAMESPACE = 'Treasury';
 
 var tauist = require('tauist');
 var crypto = require('crypto');
+var stringify = require('json-stable-stringify');
 
 var adapters = require('./lib/adapters');
 
@@ -26,8 +27,8 @@ function nativePromise(resolver) {
 
 function getKey(fnParams, namespace) {
     namespace = (namespace || DEFAULT_NAMESPACE) + ':';
-    fnParams = JSON.stringify(fnParams || {});
-    return namespace + crypto.createHash("md5").update(fnParams).digest("hex");
+    fnParams = stringify(fnParams || {});
+    return namespace + crypto.createHash('md5').update(fnParams).digest('hex');
 }
 
 function Treasury(opts) {
@@ -54,8 +55,6 @@ function Treasury(opts) {
         var ns = options.namespace || config.namespace;
         var key = getKey(options, ns);
         var ttl = ~~(options.ttl || config.ttl);
-
-        console.log('using key:', key);
 
         // todo refactor
         return client.get(key)

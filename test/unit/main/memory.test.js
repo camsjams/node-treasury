@@ -10,7 +10,7 @@ function testMainApi() {
     function testInvest() {
         it('should get value from promise directly', notCached);
         it('should get value from cache', isCached);
-        it.only('should get same value with same options in different order', optionsInDiffOrder);
+        it('should get same value with same options in different order', optionsInDiffOrder);
 
         function notCached() {
             // arrange
