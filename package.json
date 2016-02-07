@@ -6,7 +6,8 @@
   "scripts": {
     "test": "mocha test/code/*.js test/code/**/*.js",
     "lint": "jshint .",
-    "style": "jscs ."
+    "style": "jscs .",
+    "allthethings": "npm run lint; npm run style; npm test"
   },
   "repository": {
     "type": "git",
