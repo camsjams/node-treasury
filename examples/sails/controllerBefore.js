@@ -1,5 +1,6 @@
 var redis = require('redis');
 var bluebird = require('bluebird');
+var User = User || {};
 
 bluebird.promisifyAll(redis.RedisClient.prototype);
 var cacheClient = redis.createClient();

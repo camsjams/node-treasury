@@ -206,11 +206,11 @@ testit: function(req, res) {
 
     treasury.invest(User.find.bind(User, id), {id: id})
         .then(function(modelData) {
-            console.log('treasury.invest found data:', data);
+            console.log('treasury.invest found data:', modelData);
             res.ok(modelData);
         })
         .catch(function(error) {
-            console.log('treasury.invest could not find data, err', data);
+            console.log('treasury.invest could not find data, err', error);
             res.serverError(error);
         });
 }
