@@ -3,10 +3,20 @@
     "validateIndentation": 4,
     "requireTrailingComma": false,
     "requireCapitalizedComments": false,
+    "maximumLineLength": 121,
     "safeContextKeyword": [
         "self"
     ],
     "excludeFiles": [
         "node_modules"
+    ],
+    "requireCurlyBraces": [
+        "if",
+        "else",
+        "for",
+        "while",
+        "do",
+        "try",
+        "catch"
     ]
 }

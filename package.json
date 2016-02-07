@@ -1,12 +1,13 @@
 {
   "name": "treasury",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Check your caching layer before running your promises",
   "main": "index.js",
   "scripts": {
-    "test": "mocha test/bootstrap.test.js test/unit/**/*.test.js",
-    "lint": "./node_modules/jshint/bin/jshint **.js",
-    "style": "jscs **.js"
+    "test": "mocha test/code/*.js test/code/**/*.js",
+    "lint": "jshint .",
+    "style": "jscs .",
+    "allthethings": "npm run lint; npm run style; npm test"
   },
   "repository": {
     "type": "git",
@@ -23,5 +24,16 @@
   "bugs": {
     "url": "https://github.com/camsjams/node-treasury/issues"
   },
-  "homepage": "https://github.com/camsjams/node-treasury#readme"
+  "homepage": "https://github.com/camsjams/node-treasury#readme",
+  "dependencies": {
+    "tauist": "^1.0.1"
+  },
+  "devDependencies": {
+    "chai": "^3.4.1",
+    "jscs": "2.7.0",
+    "jshint": "2.8.0",
+    "json-stable-stringify": "^1.0.1",
+    "mocha": "2.3.4",
+    "rewire": "^2.5.1"
+  }
 }
