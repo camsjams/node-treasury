@@ -41,7 +41,7 @@ function Treasury(opts) {
     };
 
     function invest(thePromise, options) {
-      options = options || {};
+        options = options || {};
         // get from cache
         // -- if found in cache
         // ---- return value via promise
@@ -60,10 +60,12 @@ function Treasury(opts) {
         return client.get(key)
             .catch(function notFoundInCache(error) {
                 return thePromise(options)
-                  .then(function(value) {
-                    return client.set(key, value, ttl)
-                    .then(function(){return value;});
-                  });
+                    .then(function(value) {
+                        return client.set(key, value, ttl)
+                            .then(function() {
+                                return value;
+                            });
+                    });
             });
     }
 
