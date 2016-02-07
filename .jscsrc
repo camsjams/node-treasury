@@ -3,6 +3,7 @@
     "validateIndentation": 4,
     "requireTrailingComma": false,
     "requireCapitalizedComments": false,
+    "maximumLineLength": 121,
     "safeContextKeyword": [
         "self"
     ],
