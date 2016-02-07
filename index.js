@@ -56,14 +56,13 @@ function Treasury(opts) {
         var key = getKey(options, ns);
         var ttl = ~~(options.ttl || config.ttl);
 
-        // todo refactor
         return client.get(key)
             .catch(function notFoundInCache() {
                 return thePromise(options)
-                    .then(function(value) {
-                        return client.set(key, value, ttl)
+                    .then(function(promisedValue) {
+                        return client.set(key, promisedValue, ttl)
                             .then(function() {
-                                return value;
+                                return promisedValue;
                             });
                     });
             });
