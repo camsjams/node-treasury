@@ -55,16 +55,43 @@ var treasury = new Treasury({client: client});
 This is used to set the namespace in the event that the `invest` function is invoked without a namespace option.
 
 #### option: promiseFactory
-This is used to set the type of `Promise` used, and defaults to native `Promise` class. Treasury is also tested with Q and Bluebird promises.
+This is used to set the type of `Promise` used, and defaults to the native `Promise` class. Treasury is also tested with Q and Bluebird promises.
 ``` js
 // using Bluebird
 var treasury = new Treasury({promiseFactory: require('bluebird')});
-// using q js
+// using Q js
 var treasury = new Treasury({promiseFactory: require('q').Promise});
 ```
 
 #### option: ttl
 The default time-to-live for any cached objects, which will be used in the event that the `invest` function is invoked without a ttl option. It is recommended to utilize the [Tauist](https://github.com/camsjams/node-tauist) package to ease your reuse of expiration amounts.
+
+### invest(thePromise, options)
+The first parameter is the promise that you wish to wrap get from cache, or set on when successfully resolved.
+``` js
+treasury.invest(doTheThingToReallyGetData);
+```
+
+Additionally, you may utilize the options parameter to customize the cache usage for this `invest` call.
+``` js
+treasury.invest(doTheThingToReallyGetData, {
+    namespace: 'aCustomCachePrefix',
+    ttl: 'in minutes'
+});
+```
+#### option: namespace
+This is used to set the namespace for this wrapped Promise. It will fall back to the default Treasury namespace option if not set.
+
+#### option: ttl
+This is used to set the time-to-live for this wrapped Promise. It will fall back to the default Treasury default ttl option if not set.
+
+### invest() arguments with bind
+When using the `Function.prototype.bind()` method to curry a new function with some arguments, please advise that you need to pass these into the options parameter in order for Treasury to properly differentiate that invocation compared to others.
+
+In this example, `id` is the main parameter to `doTheThingToReallyGetData`, so it is bound for the Promise to be called. Additionally it is passed as a property to the options object to identify it for a unique cache later on.
+``` js
+treasury.invest(doTheThingToReallyGetData.bind(null, id), {id: id});
+```
 
 ### Basic usage - see full code in the [examples](examples)
 Here is a basic sample of "before" code using redis cache.
