@@ -9,7 +9,7 @@ develop:
 ![develop](https://circleci.com/gh/camsjams/node-treasury/tree/develop.svg?style=shield&circle-token=a1a0cc4cef2164e9c0a8b5dd18f98797dadcf292)
 
 ## Platforms / Technologies
-* [nodejs](http://nodejs.org/)
+* [Node.js](http://nodejs.org/)
 * [Promises](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)
 * [Redis](http://redis.io/)
 * [Node Redis](https://github.com/NodeRedis/node_redis)
@@ -52,10 +52,10 @@ var treasury = new Treasury({client: client});
 ```
 
 #### option: namespace
-This is used to set the namespace in the event that the `invest` function is invoked without a namespace option.
+This is used to set a default namespace in the event that the `invest` function is invoked without a namespace option.
 
 #### option: promiseFactory
-This is used to set the type of `Promise` used, and defaults to the native `Promise` class. Treasury is also tested with Q and Bluebird promises.
+This is used to set the type of `Promise` used, and defaults to the native `Promise` class. Treasury is also tested with [Q](https://github.com/kriskowal/q) and [Bluebird](https://github.com/petkaantonov/bluebird) promises.
 ``` js
 // using Bluebird
 var treasury = new Treasury({promiseFactory: require('bluebird')});
@@ -107,7 +107,7 @@ treasury.divest({
 This is used to find the namespace for this wrapped Promise. It will fall back to the default Treasury namespace option if not set.
 
 ### Basic usage - see full code in the [examples](examples)
-Here is a basic sample of "before" code using redis cache.
+Here is a basic sample of "before" code using a redis cache layer.
 
 ``` js
 var key = 'MyModel:' + id;  // you have to manage the keys!
@@ -145,13 +145,11 @@ cacheClient.getAsync(key) // you have to promisify the cache client!
       .catch(function(err) {
           console.log('could not find data, err:', err);
       });
-
-
 ```
 
 Wouldn't it be great to just do this?
-``` js
 
+``` js
 treasury.invest(doTheThingToReallyGetData({id: id}))
     .then(function(data) {
         console.log('found data:', data);
@@ -164,57 +162,58 @@ treasury.invest(doTheThingToReallyGetData({id: id}))
 ### Sails.js
 Here is a sample [Sails.js](https://github.com/balderdashy/sails) controller that caches model data into memory. Without node-treasury, notice all the duplicated logic for handling cache that will be spread about your codebase.
 ``` js
-var key = 'MyModel:' + someModelId;
-var cacheClient = redisOrMemcached.creatClient(); // assume it is promisified
+testit: function(req, res) {
+    var params = req.allParams();
+    var id = params.id;
+    var key = 'MyModel:' + id;
 
-cacheClient.get(key)
-    .then(function(data) {
-        if (data && data.length) {
-            data = JSON.parse(data);
-            if (data.length && data[0] && data[0].id) {
-                res.ok(data);
-                return true;
+    cacheClient.getAsync(key)
+        .then(function(data) {
+            console.log(key + ' isInCache =', !!data);
+            if (data) {
+                return res.ok(JSON.parse(data));
             }
-        }
-        return false;
-    })
-    .then(function(hasCache) {
-        // not ideal, but you need to figure out if the item was in cache!
-        if (!hasCache) {
-            MyModel.find()
-                .then(function(data) {
-                    res.ok(data);
-                    return cacheClient.setex(key, JSON.stringify(data));
+
+            return Promise.reject('NO_CACHE');
+        })
+        .catch(function(err) {
+            if (err !== 'NO_CACHE') {
+                return Promise.reject(err);
+            }
+
+            User.find(id)
+                .then(function(modelData) {
+                    // return data; also cache
+                    console.log(key + ' not in cache, retrieved:', modelData);
+                    return cacheClient.setexAsync(key, 10, JSON.stringify(modelData))
+                        .then(function() {
+                            res.ok(modelData);
+                        });
                 })
                 .catch(function(error) {
                     res.serverError(error);
-                })
-                .done(function() {
-                    cacheClient.quit();
                 });
-        }
-    });
+
+        });
+}
 ```
 
 With the addition of the lightweight node-treasury, you can save the boilerplate!
 ``` js
-var Memcached = require('memcached');
-var client = new Memcached();
-// see adapters section for all currently supported adapters
-var redis = require('redis');
-var client = redis.createClient();
+testit: function(req, res) {
+    var params = req.allParams();
+    var id = params.id;
 
-// It is recommended to use a single version of node-treasury.
-var TreasuryService = new Treasury({client: client});
-
-// same controller as before, now less logic
-TreasuryService.invest(MyModel.find())
-    .then(function(data) {
-        res.ok(data);
-    })
-    .catch(function(error) {
-        res.serverError(error);
-    });
+    treasury.invest(User.find.bind(User, id), {id: id})
+        .then(function(modelData) {
+            console.log('treasury.invest found data:', data);
+            res.ok(modelData);
+        })
+        .catch(function(error) {
+            console.log('treasury.invest could not find data, err', data);
+            res.serverError(error);
+        });
+}
 ```
 
 ## Pull Requests

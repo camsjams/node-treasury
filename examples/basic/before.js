@@ -26,24 +26,25 @@ function getModelData(id) {
             console.log(key + ' isInCache =', !!data);
             if (data) {
                 return Promise.resolve(JSON.parse(data));
-            } else {
-                return Promise.reject('NO_CACHE');
             }
+
+            return Promise.reject('NO_CACHE');
         })
         .catch(function(err) {
             if (err !== 'NO_CACHE') {
                 return Promise.reject(err);
-            } else {
-                return doTheThingToReallyGetData(id)
-                    .then(function(modelData) {
-                        // return data; also cache
-                        console.log(key + ' not in cache, retrieved:', modelData);
-                        return cacheClient.setexAsync(key, 10, JSON.stringify(modelData))
-                            .then(function() {
-                                return modelData;
-                            });
-                    });
             }
+
+            return doTheThingToReallyGetData(id)
+                .then(function(modelData) {
+                    // return data; also cache
+                    console.log(key + ' not in cache, retrieved:', modelData);
+                    return cacheClient.setexAsync(key, 10, JSON.stringify(modelData))
+                        .then(function() {
+                            return modelData;
+                        });
+                });
+
         });
 }
 
