@@ -22,6 +22,9 @@ develop:
 * redis storage via [Node Redis](https://github.com/NodeRedis/node_redis)
 * memcached storage via [Memcached node client](https://github.com/3rd-Eden/memcached)
 
+## Install
+>       $ npm install node-treasury --save
+
 ## Usage
 
 ### Constructor Options
