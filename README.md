@@ -163,7 +163,7 @@ treasury.invest(doTheThingToReallyGetData({id: id}))
 ```
 
 ### Sails.js
-Here is a sample [Sails.js](https://github.com/balderdashy/sails) controller that caches model data into memory. Without node-treasury, notice all the duplicated logic for handling cache that will be spread about your codebase.
+Here is a sample [Sails.js](https://github.com/balderdashy/sails) controller that caches model data into memory. Without Treasury, notice all the duplicated logic for handling cache that will be spread about your codebase.
 ``` js
 testit: function(req, res) {
     var params = req.allParams();
@@ -201,7 +201,7 @@ testit: function(req, res) {
 }
 ```
 
-With the addition of the lightweight node-treasury, you can save the boilerplate!
+With the addition of the lightweight Treasury, you can save the boilerplate!
 ``` js
 testit: function(req, res) {
     var params = req.allParams();

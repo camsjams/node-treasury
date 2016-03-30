@@ -26,13 +26,13 @@
   },
   "homepage": "https://github.com/camsjams/node-treasury#readme",
   "dependencies": {
-    "tauist": "^1.0.1"
+    "tauist": "^1.0.1",
+    "json-stable-stringify": "^1.0.1"
   },
   "devDependencies": {
     "chai": "^3.4.1",
     "jscs": "2.7.0",
     "jshint": "2.8.0",
-    "json-stable-stringify": "^1.0.1",
     "mocha": "2.3.4",
     "rewire": "^2.5.1"
   }
