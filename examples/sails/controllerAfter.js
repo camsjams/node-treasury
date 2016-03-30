@@ -1,5 +1,5 @@
 var redis = require('redis');
-var Treasury = require('node-treasury');
+var Treasury = require('treasury');
 var cacheClient = redis.createClient();
 var treasury = new Treasury({client: cacheClient});
 var User = User || {};
