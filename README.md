@@ -23,13 +23,13 @@ develop:
 * memcached storage via [Memcached node client](https://github.com/3rd-Eden/memcached)
 
 ## Install
->       $ npm install node-treasury --save
+>       $ npm install treasury --save
 
 ## Usage
 
 ### Constructor Options
 ``` js
-var Treasury = require('node-treasury');
+var Treasury = require('treasury');
 
 // default options for main class wrapper
 var treasury = new Treasury({
