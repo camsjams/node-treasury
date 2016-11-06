@@ -9,15 +9,11 @@ machine:
 dependencies:
   pre:
     - npm prune
-    - npm install redis
-    - npm install memcached
-    - npm install q
-    - npm install bluebird
 
 test:
   pre:
     - npm run lint
     - npm run style
-    
+
   override:
     - npm test
