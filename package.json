@@ -30,10 +30,14 @@
     "json-stable-stringify": "^1.0.1"
   },
   "devDependencies": {
+    "bluebird": "^3.4.6",
     "chai": "^3.4.1",
     "jscs": "2.7.0",
     "jshint": "2.8.0",
+    "memcached": "^2.2.2",
     "mocha": "2.3.4",
+    "q": "^1.4.1",
+    "redis": "^2.6.3",
     "rewire": "^2.5.1"
   }
 }
