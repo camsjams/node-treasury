@@ -1,4 +1,7 @@
 machine:
+  environment:
+      PATH: "${PATH}:${HOME}/${CIRCLE_PROJECT_REPONAME}/node_modules/.bin"
+
   timezone:
     UTC
 
@@ -6,14 +9,21 @@ machine:
     version:
       4.0.0
 
+  services:
+    - redis
+    - memcached
+
 dependencies:
   pre:
     - npm prune
+  override:
+    - yarn
+  cache_directories:
+    - ~/.cache/yarn
 
 test:
   pre:
-    - npm run lint
-    - npm run style
+    - yarn run lint
 
   override:
-    - npm test
+    - yarn test
