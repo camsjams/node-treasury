@@ -9,6 +9,10 @@ machine:
     version:
       4.0.0
 
+  services:
+      - redis
+      - memcached
+
 dependencies:
   pre:
     - npm prune
