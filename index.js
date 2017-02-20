@@ -12,7 +12,7 @@ function getDefaultOptions() {
 	return {
 		client: null,
 		namespace: DEFAULT_NAMESPACE,
-		promiseFactory: nativePromise,
+		PromiseFactory: nativePromise,
 		ttl: tauist.s.fiveMinutes
 	};
 }
@@ -33,7 +33,7 @@ function getKey(fnParams, namespace) {
 
 function Treasury(opts) {
 	var config = getCleanedOptions(opts);
-	var client = adapters.getClientAdapter(config.client, config.promiseFactory);
+	var client = adapters.getClientAdapter(config.client, config.PromiseFactory);
 
 	return {
 		invest: invest,

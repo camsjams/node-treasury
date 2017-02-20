@@ -30,8 +30,8 @@ function testMemcached() {
 		chai.assert.typeOf(result.del, 'Function');
 		chai.assert.deepEqual(result.client, memcached);
 		chai.assert.equal(result.constructor.name, 'MemcachedClientAdapter');
-		chai.assert.typeOf(result.promiseFactory, 'Function');
-		chai.assert.deepEqual(result.promiseFactory, promiseFactory);
+		chai.assert.typeOf(result.PromiseFactory, 'Function');
+		chai.assert.deepEqual(result.PromiseFactory, promiseFactory);
 
 		done();
 	}
