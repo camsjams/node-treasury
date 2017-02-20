@@ -12,6 +12,8 @@ machine:
 dependencies:
   pre:
     - npm prune
+  override:
+    - yarn
   cache_directories:
     - ~/.cache/yarn
 
