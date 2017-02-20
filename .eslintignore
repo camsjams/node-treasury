@@ -1,0 +1,5 @@
+node_modules
+coverage
+build
+scripts/one-time-scripts
+scripts/elasticsearch/index.js

@@ -5,9 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha test/code/*.js test/code/**/*.js",
-    "lint": "jshint .",
-    "style": "jscs .",
-    "allthethings": "npm run lint; npm run style; npm test"
+    "lint": "./node_modules/.bin/eslint . --ext .js"
   },
   "repository": {
     "type": "git",
@@ -32,8 +30,7 @@
   "devDependencies": {
     "bluebird": "^3.4.6",
     "chai": "^3.4.1",
-    "jscs": "2.7.0",
-    "jshint": "2.8.0",
+    "eslint": "3.12.0",
     "memcached": "^2.2.2",
     "mocha": "2.3.4",
     "q": "^1.4.1",
