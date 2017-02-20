@@ -17,14 +17,14 @@ function testMainApi() {
 			var treasury = new Treasury();
 			var expected = 'I made a promise Mr. Frodo.';
 			var samplePromise = function() {
-				return new Promise(function(resolve) {
+				return new Promise((resolve) => {
 					resolve(expected);
 				});
 			};
 
 			// act
 			return treasury.invest(samplePromise)
-				.then(function(value) {
+				.then((value) => {
 					// assert
 					chai.assert.equal(value, expected);
 				});
@@ -36,12 +36,12 @@ function testMainApi() {
 			var opts = {namespace: 'isCachedTest'};
 			var expected = 31337;
 			var firstPromise = function() {
-				return new Promise(function(resolve) {
+				return new Promise((resolve) => {
 					resolve(expected);
 				});
 			};
 			var secondPromise = function() {
-				return new Promise(function(resolve) {
+				return new Promise((resolve) => {
 					resolve(12345);
 				});
 			};
@@ -49,7 +49,7 @@ function testMainApi() {
 			// act
 			return treasury.invest(firstPromise, opts)
 				.then(treasury.invest.bind(null, secondPromise, opts))
-				.then(function(value) {
+				.then((value) => {
 					// assert
 					chai.assert.equal(value, expected);
 				});
@@ -63,13 +63,13 @@ function testMainApi() {
 			var expected = 31337;
 			var wasSecondPromiseCalled = false;
 			var firstPromise = function() {
-				return new Promise(function(resolve) {
+				return new Promise((resolve) => {
 					expected = parseInt(Math.random() * 1000);
 					resolve(expected);
 				});
 			};
 			var secondPromise = function() {
-				return new Promise(function(resolve) {
+				return new Promise((resolve) => {
 					wasSecondPromiseCalled = true;
 					resolve(Math.random() * 1000);
 				});
@@ -78,7 +78,7 @@ function testMainApi() {
 			// act
 			return treasury.invest(firstPromise, opts1)
 				.then(treasury.invest.bind(null, secondPromise, opts2))
-				.then(function(value) {
+				.then((value) => {
 					// assert
 					chai.assert.equal(value, expected);
 					chai.assert.notOk(wasSecondPromiseCalled);
@@ -106,12 +106,12 @@ function testMainApi() {
 			var opts = {namespace: 'delCached', addValue: 2};
 			var expected = 42;
 			var firstPromise = function() {
-				return new Promise(function(resolve) {
+				return new Promise((resolve) => {
 					resolve(31337);
 				});
 			};
 			var secondPromise = function(options) {
-				return new Promise(function(resolve) {
+				return new Promise((resolve) => {
 					resolve(40 + options.addValue);
 				});
 			};
@@ -120,7 +120,7 @@ function testMainApi() {
 			return treasury.invest(firstPromise, opts)
 				.then(treasury.divest.bind(null, opts))
 				.then(treasury.invest.bind(null, secondPromise, opts))
-				.then(function(value) {
+				.then((value) => {
 					// assert
 					chai.assert.equal(value, expected);
 				});

@@ -43,11 +43,12 @@ function testMemcached() {
 
 		// act
 		return memcachedAdapter.get('newKey')
+
 			// assert
-			.then(function() {
+			.then(() => {
 				throw new Error('resolved but should be rejected!');
 			})
-			.catch(function(error) {
+			.catch((error) => {
 				chai.assert.typeOf(error, 'Null');
 			});
 	}
@@ -59,7 +60,7 @@ function testMemcached() {
 
 		// act
 		return memcachedAdapter.set('aCoolKey', {a: true}, 10)
-			.then(function(result) {
+			.then((result) => {
 				// assert
 				chai.assert.ok(result);
 			});
@@ -74,7 +75,7 @@ function testMemcached() {
 		// act
 		return memcachedAdapter.set(cacheKey, {a: true}, 10)
 			.then(memcachedAdapter.get.bind(memcachedAdapter, cacheKey))
-			.then(function(result) {
+			.then((result) => {
 				// assert
 				chai.assert.typeOf(result, 'Object');
 				chai.assert.equal(result.a, true);
@@ -91,11 +92,12 @@ function testMemcached() {
 		return memcachedAdapter.set(cacheKey, {a: true}, 1)
 			.then(waitPromise)
 			.then(memcachedAdapter.get.bind(memcachedAdapter, cacheKey))
+
 			// assert
-			.then(function() {
+			.then(() => {
 				throw new Error('resolved but should be rejected!');
 			})
-			.catch(function(error) {
+			.catch((error) => {
 				chai.assert.typeOf(error, 'Null');
 			});
 	}
@@ -109,7 +111,7 @@ function testMemcached() {
 		// act
 		return memcachedAdapter.set(cacheKey, 101, 100)
 			.then(memcachedAdapter.del.bind(memcachedAdapter, cacheKey))
-			.then(function(result) {
+			.then((result) => {
 				chai.assert.ok(result);
 			});
 	}
@@ -124,19 +126,20 @@ function testMemcached() {
 		return memcachedAdapter.set(cacheKey, 101, 100)
 			.then(memcachedAdapter.del.bind(memcachedAdapter, cacheKey))
 			.then(memcachedAdapter.get.bind(memcachedAdapter, cacheKey))
+
 			// assert
-			.then(function() {
+			.then(() => {
 				throw new Error('resolved but should be rejected!');
 			})
-			.catch(function(error) {
+			.catch((error) => {
 				chai.assert.typeOf(error, 'Null');
 			});
 	}
 }
 
 function waitPromise() {
-	return new Promise(function(resolve) {
-		setTimeout(function() {
+	return new Promise((resolve) => {
+		setTimeout(() => {
 			resolve(true);
 		}, 1000);
 	});

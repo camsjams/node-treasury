@@ -11,7 +11,7 @@ function testPromiseFactories() {
 	var expected = 12345;
 
 	function samplePromisedValue() {
-		return new Promise(function(resolve) {
+		return new Promise((resolve) => {
 			resolve(expected);
 		});
 	}
@@ -22,9 +22,10 @@ function testPromiseFactories() {
 		function basicPromise() {
 			// arrange
 			var treasury = new Treasury();
+
 			// act
 			return treasury.invest(samplePromisedValue)
-				.then(function(result) {
+				.then((result) => {
 					// assert
 					chai.assert.equal(result, expected);
 				});
@@ -40,7 +41,7 @@ function testPromiseFactories() {
 
 			// act
 			return treasury.invest(samplePromisedValue)
-				.then(function(result) {
+				.then((result) => {
 					// assert
 					chai.assert.equal(result, expected);
 				});
@@ -56,7 +57,7 @@ function testPromiseFactories() {
 
 			// act
 			return treasury.invest(samplePromisedValue)
-				.then(function(result) {
+				.then((result) => {
 					// assert
 					chai.assert.equal(result, expected);
 				});

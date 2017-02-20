@@ -12,7 +12,7 @@ module.exports = {
 		var key = 'MyModel:' + id;
 
 		cacheClient.getAsync(key)
-			.then(function(data) {
+			.then((data) => {
 				console.log(key + ' isInCache =', !!data);
 				if (data) {
 					return res.ok(JSON.parse(data));
@@ -20,21 +20,21 @@ module.exports = {
 
 				return Promise.reject('NO_CACHE');
 			})
-			.catch(function(err) {
+			.catch((err) => {
 				if (err !== 'NO_CACHE') {
 					return Promise.reject(err);
 				}
 
 				User.find(id)
-					.then(function(modelData) {
+					.then((modelData) => {
 						// return data; also cache
 						console.log(key + ' not in cache, retrieved:', modelData);
 						return cacheClient.setexAsync(key, 10, JSON.stringify(modelData))
-							.then(function() {
+							.then(() => {
 								res.ok(modelData);
 							});
 					})
-					.catch(function(error) {
+					.catch((error) => {
 						res.serverError(error);
 					});
 

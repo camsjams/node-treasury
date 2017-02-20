@@ -43,11 +43,12 @@ function testRedis() {
 
 		// act
 		return redisAdapter.get('newKey')
+
 			// assert
-			.then(function() {
+			.then(() => {
 				throw new Error('resolved but should be rejected!');
 			})
-			.catch(function(error) {
+			.catch((error) => {
 				chai.assert.typeOf(error, 'Null');
 			});
 	}
@@ -59,7 +60,7 @@ function testRedis() {
 
 		// act
 		return redisAdapter.set('aCoolKey', {a: true}, 10)
-			.then(function(result) {
+			.then((result) => {
 				// assert
 				chai.assert.ok(result);
 			});
@@ -74,7 +75,7 @@ function testRedis() {
 		// act
 		return redisAdapter.set(cacheKey, {a: true}, 15)
 			.then(redisAdapter.get.bind(redisAdapter, cacheKey))
-			.then(function(result) {
+			.then((result) => {
 				// assert
 				chai.assert.typeOf(result, 'Object');
 				chai.assert.equal(result.a, true);
@@ -91,11 +92,12 @@ function testRedis() {
 		return redisAdapter.set(cacheKey, {a: true}, 1)
 			.then(waitPromise)
 			.then(redisAdapter.get.bind(redisAdapter, cacheKey))
+
 			// assert
-			.then(function() {
+			.then(() => {
 				throw new Error('resolved but should be rejected!');
 			})
-			.catch(function(error) {
+			.catch((error) => {
 				chai.assert.typeOf(error, 'Null');
 			});
 	}
@@ -109,7 +111,7 @@ function testRedis() {
 		// act
 		return redisAdapter.set(cacheKey, 101, 100)
 			.then(redisAdapter.del.bind(redisAdapter, cacheKey))
-			.then(function(result) {
+			.then((result) => {
 				chai.assert.ok(result);
 			});
 	}
@@ -124,19 +126,20 @@ function testRedis() {
 		return redisAdapter.set(cacheKey, 101, 100)
 			.then(redisAdapter.del.bind(redisAdapter, cacheKey))
 			.then(redisAdapter.get.bind(redisAdapter, cacheKey))
+
 			// assert
-			.then(function() {
+			.then(() => {
 				throw new Error('resolved but should be rejected!');
 			})
-			.catch(function(error) {
+			.catch((error) => {
 				chai.assert.typeOf(error, 'Null');
 			});
 	}
 }
 
 function waitPromise() {
-	return new Promise(function(resolve) {
-		setTimeout(function() {
+	return new Promise((resolve) => {
+		setTimeout(() => {
 			resolve(true);
 		}, 1000);
 	});

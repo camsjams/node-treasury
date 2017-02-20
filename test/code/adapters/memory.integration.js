@@ -39,11 +39,12 @@ function testMemory() {
 
 		// act
 		return memoryAdapter.get('newKey')
+
 			// assert
-			.then(function() {
+			.then(() => {
 				throw new Error('resolved but should be rejected!');
 			})
-			.catch(function(error) {
+			.catch((error) => {
 				chai.assert.typeOf(error, 'Null');
 			});
 	}
@@ -54,7 +55,7 @@ function testMemory() {
 
 		// act
 		return memoryAdapter.set('aCoolKey', {a: true}, 10)
-			.then(function(result) {
+			.then((result) => {
 				// assert
 				chai.assert.ok(result);
 			});
@@ -68,7 +69,7 @@ function testMemory() {
 		// act
 		return memoryAdapter.set(cacheKey, {a: true}, 10)
 			.then(memoryAdapter.get.bind(memoryAdapter, cacheKey))
-			.then(function(result) {
+			.then((result) => {
 				// assert
 				chai.assert.typeOf(result, 'Object');
 				chai.assert.equal(result.a, true);
@@ -84,11 +85,12 @@ function testMemory() {
 		return memoryAdapter.set(cacheKey, {a: true}, 1)
 			.then(waitPromise)
 			.then(memoryAdapter.get.bind(memoryAdapter, cacheKey))
+
 			// assert
-			.then(function() {
+			.then(() => {
 				throw new Error('resolved but should be rejected!');
 			})
-			.catch(function(error) {
+			.catch((error) => {
 				chai.assert.typeOf(error, 'Null');
 			});
 	}
@@ -101,7 +103,7 @@ function testMemory() {
 		// act
 		return memoryAdapter.set(cacheKey, 101, 100)
 			.then(memoryAdapter.del.bind(memoryAdapter, cacheKey))
-			.then(function(result) {
+			.then((result) => {
 				chai.assert.ok(result);
 			});
 	}
@@ -115,19 +117,20 @@ function testMemory() {
 		return memoryAdapter.set(cacheKey, 101, 100)
 			.then(memoryAdapter.del.bind(memoryAdapter, cacheKey))
 			.then(memoryAdapter.get.bind(memoryAdapter, cacheKey))
+
 			// assert
-			.then(function() {
+			.then(() => {
 				throw new Error('resolved but should be rejected!');
 			})
-			.catch(function(error) {
+			.catch((error) => {
 				chai.assert.typeOf(error, 'Null');
 			});
 	}
 }
 
 function waitPromise() {
-	return new Promise(function(resolve) {
-		setTimeout(function() {
+	return new Promise((resolve) => {
+		setTimeout(() => {
 			resolve(true);
 		}, 300);
 	});
