@@ -10,8 +10,8 @@ machine:
       4.0.0
 
   services:
-      - redis
-      - memcached
+    - redis
+    - memcached
 
 dependencies:
   pre:
