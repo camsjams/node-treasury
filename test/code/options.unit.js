@@ -25,7 +25,7 @@ function testOptions() {
 			chai.assert.typeOf(result.client, 'Null');
 			chai.assert.equal(result.ttl, 300);
 			chai.assert.equal(result.namespace, 'Treasury');
-			chai.assert.typeOf(result.PromiseFactory, 'Function');
+			chai.assert.typeOf(result.promiseFactory, 'Function');
 
 			done();
 		}
@@ -42,7 +42,7 @@ function testOptions() {
 			chai.assert.typeOf(result.client, 'Null');
 			chai.assert.equal(result.ttl, 300);
 			chai.assert.equal(result.namespace, 'Treasury');
-			chai.assert.typeOf(result.PromiseFactory, 'Function');
+			chai.assert.typeOf(result.promiseFactory, 'Function');
 
 			done();
 		}
@@ -59,7 +59,7 @@ function testOptions() {
 			chai.assert.typeOf(result.client, 'Null');
 			chai.assert.equal(result.ttl, 300);
 			chai.assert.equal(result.namespace, 'Treasury');
-			chai.assert.typeOf(result.PromiseFactory, 'Function');
+			chai.assert.typeOf(result.promiseFactory, 'Function');
 
 			done();
 		}
@@ -86,7 +86,7 @@ function testOptions() {
 			chai.assert.typeOf(result.client, 'Null');
 			chai.assert.equal(result.ttl, 300);
 			chai.assert.equal(result.namespace, 'Treasury');
-			chai.assert.typeOf(result.PromiseFactory, 'Function');
+			chai.assert.typeOf(result.promiseFactory, 'Function');
 
 			done();
 		}
@@ -103,7 +103,7 @@ function testOptions() {
 			chai.assert.typeOf(result.client, 'Null');
 			chai.assert.equal(result.ttl, 300);
 			chai.assert.equal(result.namespace, 'Treasury');
-			chai.assert.typeOf(result.PromiseFactory, 'Function');
+			chai.assert.typeOf(result.promiseFactory, 'Function');
 
 			done();
 		}
@@ -120,7 +120,7 @@ function testOptions() {
 			chai.assert.typeOf(result.client, 'Null');
 			chai.assert.equal(result.ttl, 300);
 			chai.assert.equal(result.namespace, 'Treasury');
-			chai.assert.typeOf(result.PromiseFactory, 'Function');
+			chai.assert.typeOf(result.promiseFactory, 'Function');
 
 			done();
 		}
@@ -183,8 +183,8 @@ function testOptions() {
 
 			// assert
 			chai.assert.typeOf(result, 'Object');
-			chai.assert.typeOf(result.PromiseFactory, 'Function');
-			chai.assert.deepEqual(result.PromiseFactory, myFakePromise);
+			chai.assert.typeOf(result.promiseFactory, 'Function');
+			chai.assert.deepEqual(result.promiseFactory, myFakePromise);
 
 			done();
 		}
