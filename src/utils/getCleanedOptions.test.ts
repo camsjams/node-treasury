@@ -74,6 +74,6 @@ test('should accept a client', () => {
 
 	// assert
 	chai.assert.typeOf(result, 'Object');
-	chai.assert.typeOf(result.client, 'Object');
+	chai.assert.typeOf(result.client, 'Function');
 	chai.assert.deepEqual(result.client, myFakeClient);
 });
