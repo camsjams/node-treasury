@@ -2,6 +2,13 @@ README.md
 jest.config.json
 *.test.ts
 
+.circleci
+examples
+src
+.editorconfig
+.eslintrc
+.eslintignore
+jest.config.js
 lib-cov
 *.seed
 *.log
