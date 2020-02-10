@@ -13,7 +13,7 @@ test('base adapter should construct', () => {
 	expect(result.client).toEqual(client);
 });
 
-test('base adapter should construct get', async () => {
+test('base adapter should get', async () => {
 	// arrange
 	expect.assertions(1);
 	const adapter = new BaseAdapter(sinon.stub());
