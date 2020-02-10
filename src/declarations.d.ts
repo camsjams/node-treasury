@@ -1,6 +1,11 @@
-
 interface TreasuryClient {
 
+}
+
+type TreasuryOptions = {
+	client: Function;
+	namespace: string;
+	ttl: number;
 }
 
 type Callback = (error: Error, results: string) => void;

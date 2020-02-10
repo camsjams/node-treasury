@@ -1,34 +1,7 @@
 
-import crypto from 'crypto';
-import tauist from 'tauist';
-import stringify from 'json-stable-stringify';
 import getAdapter from './adapter';
-
-const DEFAULT_NAMESPACE = 'Treasury';
-
-function getDefaultOptions(): Options {
-	return {
-		client: null,
-		namespace: DEFAULT_NAMESPACE,
-		ttl: tauist.s.fiveMinutes
-	};
-}
-
-function getCleanedOptions(opts: Options): Options {
-	return Object.assign({}, getDefaultOptions(), opts);
-}
-
-function getKey(fnParams: object, namespace: string): string {
-	const ns = (namespace || DEFAULT_NAMESPACE) + ':';
-	const fingerprint = stringify(fnParams || {});
-	return ns + crypto.createHash('md5').update(fingerprint).digest('hex');
-}
-
-export type Options = {
-	client: null;
-	namespace: string;
-	ttl: number;
-}
+import getKey from './utils/getKey';
+import getCleanedOptions from './utils/getCleanedOptions';
 
 export type InvestOptions = {
 	namespace?: string;
@@ -40,16 +13,16 @@ export type DivestOptions = {
 }
 
 class Treasury {
-	config: Options;
+	config: TreasuryOptions;
 
 	treasury: TreasuryAdapter;
 
-	constructor(options: Options) {
+	constructor(options: TreasuryOptions) {
 		this.config = getCleanedOptions(options);
 		this.treasury = getAdapter(this.config.client);
 	}
 
-	async invest<T>(thePromise: (p: Options) => Promise<T>, overrides: InvestOptions): Promise<T> {
+	async invest<T>(thePromise: (p: TreasuryOptions) => Promise<T>, overrides: InvestOptions): Promise<T> {
 		const options = overrides || {
 			namespace: overrides.namespace || this.config.namespace,
 			ttl: overrides.ttl || this.config.ttl
