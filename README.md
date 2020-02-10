@@ -6,6 +6,12 @@ master:
 develop:
 ![develop](https://circleci.com/gh/camsjams/node-treasury/tree/develop.svg?style=shield&circle-token=a1a0cc4cef2164e9c0a8b5dd18f98797dadcf292)
 
+### Version 2.0.0+
+- Removes Promise factory overrides
+- Provides TypeScript definitions
+- Performance Optimized
+- Upgraded dependencies
+
 ## Platforms / Technologies
 * [Node.js](http://nodejs.org/)
 * [Promises](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)
@@ -54,15 +60,6 @@ var treasury = new Treasury({client: client});
 
 #### option: namespace
 This is used to set a default namespace in the event that the `invest` function is invoked without a namespace option.
-
-#### option: promiseFactory
-This is used to set the type of `Promise` used, and defaults to the native `Promise` class. Treasury is also tested with [Q](https://github.com/kriskowal/q) and [Bluebird](https://github.com/petkaantonov/bluebird) promises.
-``` js
-// using Bluebird
-var treasury = new Treasury({promiseFactory: require('bluebird')});
-// using Q js
-var treasury = new Treasury({promiseFactory: require('q').Promise});
-```
 
 #### option: ttl
 The default time-to-live for any cached objects, which will be used in the event that the `invest` function is invoked without a ttl option. It is recommended to utilize the [Tauist](https://github.com/camsjams/node-tauist) package to ease your reuse of expiration amounts.
@@ -160,65 +157,8 @@ treasury.invest(doTheThingToReallyGetData({id: id}))
     });
 ```
 
-### Sails.js
-Here is a sample [Sails.js](https://github.com/balderdashy/sails) controller that caches model data into memory. Without Treasury, notice all the duplicated logic for handling cache that will be spread about your codebase.
-``` js
-testit: function(req, res) {
-    var params = req.allParams();
-    var id = params.id;
-    var key = 'MyModel:' + id;
-
-    cacheClient.getAsync(key)
-        .then(function(data) {
-            console.log(key + ' isInCache =', !!data);
-            if (data) {
-                return res.ok(JSON.parse(data));
-            }
-
-            return Promise.reject('NO_CACHE');
-        })
-        .catch(function(err) {
-            if (err !== 'NO_CACHE') {
-                return Promise.reject(err);
-            }
-
-            User.find(id)
-                .then(function(modelData) {
-                    // return data; also cache
-                    console.log(key + ' not in cache, retrieved:', modelData);
-                    return cacheClient.setexAsync(key, 10, JSON.stringify(modelData))
-                        .then(function() {
-                            res.ok(modelData);
-                        });
-                })
-                .catch(function(error) {
-                    res.serverError(error);
-                });
-
-        });
-}
-```
-
-With the addition of the lightweight Treasury, you can save the boilerplate!
-``` js
-testit: function(req, res) {
-    var params = req.allParams();
-    var id = params.id;
-
-    treasury.invest(User.find.bind(User, id), {id: id})
-        .then(function(modelData) {
-            console.log('treasury.invest found data:', modelData);
-            res.ok(modelData);
-        })
-        .catch(function(error) {
-            console.log('treasury.invest could not find data, err', error);
-            res.serverError(error);
-        });
-}
-```
-
 ## Pull Requests
-In order to properly run the tests for this repo, on top of the npm install, you will need the dependencies in [Circle CI config](circle.yml). All PRs require passing JSHint, JavaScript Code Style Checker (JSCS), and updated/added/passing unit and integration tests.
+In order to properly run the tests for this repo, on top of the npm install, you will need the dependencies in [Circle CI config](.circle/config.yml). All PRs require passing JSHint, JavaScript Code Style Checker (JSCS), and updated/added/passing unit and integration tests.
 
 ## Notes
 I tried really hard not to use a cache/cash pun when writing node-treasury.
