@@ -22,12 +22,7 @@ class Treasury {
 		this.treasury = getAdapter(this.config.client);
 	}
 
-	async invest<T>(thePromise: (p: TreasuryOptions) => Promise<T>, overrides: InvestOptions): Promise<T> {
-		const options = overrides || {
-			namespace: overrides.namespace || this.config.namespace,
-			ttl: overrides.ttl || this.config.ttl
-		};
-
+	async invest<T>(thePromise: (p: TreasuryOptions) => Promise<T>, options: InvestOptions = {}): Promise<T> {
 		// get from cache
 		// -- if found in cache
 		// ---- return value via promise
@@ -38,8 +33,9 @@ class Treasury {
 		// ---------- return data via promise
 		// end consumer handles all catches except cache failure!
 
-		const key = getKey(this.config, options.namespace);
-		const ttl = ~~options.ttl;
+		const ns = options.namespace || this.config.namespace;
+		const key = getKey(options, ns);
+		const ttl = ~~(options.ttl || this.config.ttl);
 
 		return this.treasury.get<T>(key)
 			.catch(() => thePromise(this.config)
