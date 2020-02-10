@@ -8,7 +8,7 @@ const TYPE_MEMCACHED = 'Client';
 const isValidClient = (client: unknown): boolean =>
 	client === null || client && client.constructor !== undefined;
 
-function getClientAdapter(unknownClient: TreasuryClient): TreasuryAdapter {
+function getClientAdapter(unknownClient?: TreasuryClient): TreasuryAdapter {
 	if (!isValidClient(unknownClient)) {
 		throw new Error('invalid_client');
 	} else if (unknownClient === null) {
