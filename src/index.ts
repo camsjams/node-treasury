@@ -23,24 +23,19 @@ class Treasury {
 	}
 
 	async invest<T>(thePromise: (p: TreasuryOptions) => Promise<T>, options: InvestOptions = {}): Promise<T> {
-		// get from cache
-		// -- if found in cache
-		// ---- return value via promise
-		// -- if not found in cache
-		// ---- run promise for value
-		// ------ if promise successful
-		// -------- set to cache
-		// ---------- return data via promise
-		// end consumer handles all catches except cache failure!
-
 		const ns = options.namespace || this.config.namespace;
 		const key = getKey(options, ns);
 		const ttl = ~~(options.ttl || this.config.ttl);
 
-		return this.treasury.get<T>(key)
-			.catch(() => thePromise(this.config)
-				.then((promisedValue) => this.treasury.set(key, promisedValue, ttl)
-					.then(() => promisedValue)));
+		let value: T;
+		try {
+			value = await this.treasury.get<T>(key);
+		} catch (error) {
+			value = await thePromise(this.config);
+			this.treasury.set(key, value, ttl);
+		}
+
+		return value;
 	}
 
 	divest<T>(options: DivestOptions = {}): Promise<true> {
