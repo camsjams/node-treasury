@@ -6,6 +6,8 @@ jobs:
       - image: node:10.16.0-alpine
         environment:
           NODE_ENV: test
+      - image: circleci/redis
+      - image: memcached
     environment:
       TZ: "/usr/share/zoneinfo/Etc/UTC"
     steps:
