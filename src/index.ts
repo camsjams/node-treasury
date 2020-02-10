@@ -47,7 +47,7 @@ class Treasury {
 					.then(() => promisedValue)));
 	}
 
-	divest<T>(options: DivestOptions): Promise<true> {
+	divest<T>(options: DivestOptions = {}): Promise<true> {
 		const ns = options.namespace || this.config.namespace;
 		const key = getKey(options, ns);
 

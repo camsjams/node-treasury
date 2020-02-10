@@ -3,13 +3,13 @@ interface TreasuryClient {
 }
 
 type TreasuryOptions = {
-	client?: () => object;
+	client?: object;
 	namespace?: string;
 	ttl?: number;
 }
 
 type TreasuryConfig = {
-	client: () => object;
+	client: object;
 	namespace: string;
 	ttl: number;
 }

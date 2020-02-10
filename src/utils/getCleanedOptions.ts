@@ -8,11 +8,5 @@ const getDefaultOptions = (): TreasuryConfig => ({
 	ttl: tauist.s.fiveMinutes
 });
 
-type TreasuryOptions = {
-	client?: () => object;
-	namespace?: string;
-	ttl?: number;
-}
-
 export default (opts?: TreasuryOptions): TreasuryConfig =>
 	Object.assign({}, getDefaultOptions(), opts);
