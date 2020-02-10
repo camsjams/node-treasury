@@ -1,6 +1,7 @@
-var chai = require('chai');
-var _rewire = require('rewire');
-var Treasury = _rewire('../../index');
+const chai = require('chai');
+const _rewire = require('rewire');
+
+const Treasury = _rewire('../../index');
 
 describe('Test default and supported options', testOptions);
 
@@ -15,10 +16,10 @@ function testOptions() {
 
 		function undefOpts(done) {
 			// arrange
-			var getDefaultOptions = Treasury.__get__('getDefaultOptions');
+			const getDefaultOptions = Treasury.__get__('getDefaultOptions');
 
 			// act
-			var result = getDefaultOptions();
+			const result = getDefaultOptions();
 
 			// assert
 			chai.assert.typeOf(result, 'Object');
@@ -32,10 +33,10 @@ function testOptions() {
 
 		function nullOpts(done) {
 			// arrange
-			var getDefaultOptions = Treasury.__get__('getDefaultOptions');
+			const getDefaultOptions = Treasury.__get__('getDefaultOptions');
 
 			// act
-			var result = getDefaultOptions(null);
+			const result = getDefaultOptions(null);
 
 			// assert
 			chai.assert.typeOf(result, 'Object');
@@ -49,10 +50,10 @@ function testOptions() {
 
 		function emptyOpts(done) {
 			// arrange
-			var getDefaultOptions = Treasury.__get__('getDefaultOptions');
+			const getDefaultOptions = Treasury.__get__('getDefaultOptions');
 
 			// act
-			var result = getDefaultOptions({});
+			const result = getDefaultOptions({});
 
 			// assert
 			chai.assert.typeOf(result, 'Object');
@@ -76,10 +77,10 @@ function testOptions() {
 
 		function undefOpts(done) {
 			// arrange
-			var getCleanedOptions = Treasury.__get__('getCleanedOptions');
+			const getCleanedOptions = Treasury.__get__('getCleanedOptions');
 
 			// act
-			var result = getCleanedOptions();
+			const result = getCleanedOptions();
 
 			// assert
 			chai.assert.typeOf(result, 'Object');
@@ -93,10 +94,10 @@ function testOptions() {
 
 		function nullOpts(done) {
 			// arrange
-			var getCleanedOptions = Treasury.__get__('getCleanedOptions');
+			const getCleanedOptions = Treasury.__get__('getCleanedOptions');
 
 			// act
-			var result = getCleanedOptions(null);
+			const result = getCleanedOptions(null);
 
 			// assert
 			chai.assert.typeOf(result, 'Object');
@@ -110,10 +111,10 @@ function testOptions() {
 
 		function emptyOpts(done) {
 			// arrange
-			var getCleanedOptions = Treasury.__get__('getCleanedOptions');
+			const getCleanedOptions = Treasury.__get__('getCleanedOptions');
 
 			// act
-			var result = getCleanedOptions({});
+			const result = getCleanedOptions({});
 
 			// assert
 			chai.assert.typeOf(result, 'Object');
@@ -127,10 +128,10 @@ function testOptions() {
 
 		function customDefaultTtl(done) {
 			// arrange
-			var getCleanedOptions = Treasury.__get__('getCleanedOptions');
+			const getCleanedOptions = Treasury.__get__('getCleanedOptions');
 
 			// act
-			var result = getCleanedOptions({ttl: 1337});
+			const result = getCleanedOptions({ttl: 1337});
 
 			// assert
 			chai.assert.typeOf(result, 'Object');
@@ -141,10 +142,10 @@ function testOptions() {
 
 		function customDefaultNamespace(done) {
 			// arrange
-			var getCleanedOptions = Treasury.__get__('getCleanedOptions');
+			const getCleanedOptions = Treasury.__get__('getCleanedOptions');
 
 			// act
-			var result = getCleanedOptions({namespace: 'ScroogeMcDuck'});
+			const result = getCleanedOptions({namespace: 'ScroogeMcDuck'});
 
 			// assert
 			chai.assert.typeOf(result, 'Object');
@@ -155,13 +156,13 @@ function testOptions() {
 
 		function customClient(done) {
 			// arrange
-			var getCleanedOptions = Treasury.__get__('getCleanedOptions');
-			var myFakeClient = new function() {
+			const getCleanedOptions = Treasury.__get__('getCleanedOptions');
+			const myFakeClient = new function() {
 				return 1245;
 			};
 
 			// act
-			var result = getCleanedOptions({client: myFakeClient});
+			const result = getCleanedOptions({client: myFakeClient});
 
 			// assert
 			chai.assert.typeOf(result, 'Object');
@@ -173,13 +174,13 @@ function testOptions() {
 
 		function customPromise(done) {
 			// arrange
-			var getCleanedOptions = Treasury.__get__('getCleanedOptions');
-			var myFakePromise = function() {
+			const getCleanedOptions = Treasury.__get__('getCleanedOptions');
+			const myFakePromise = function() {
 				return 1245;
 			};
 
 			// act
-			var result = getCleanedOptions({promiseFactory: myFakePromise});
+			const result = getCleanedOptions({promiseFactory: myFakePromise});
 
 			// assert
 			chai.assert.typeOf(result, 'Object');

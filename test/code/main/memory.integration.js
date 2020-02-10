@@ -1,5 +1,5 @@
-var chai = require('chai');
-var Treasury = require('../../../index');
+const chai = require('chai');
+const Treasury = require('../../../index');
 
 describe('Test main Treasury public API using memory', testMainApi);
 
@@ -14,9 +14,9 @@ function testMainApi() {
 
 		function notCached() {
 			// arrange
-			var treasury = new Treasury();
-			var expected = 'I made a promise Mr. Frodo.';
-			var samplePromise = function() {
+			const treasury = new Treasury();
+			const expected = 'I made a promise Mr. Frodo.';
+			const samplePromise = function() {
 				return new Promise((resolve) => {
 					resolve(expected);
 				});
@@ -32,15 +32,16 @@ function testMainApi() {
 
 		function isCached() {
 			// arrange
-			var treasury = new Treasury();
-			var opts = {namespace: 'isCachedTest'};
-			var expected = 31337;
-			var firstPromise = function() {
+			const treasury = new Treasury();
+			const opts = {namespace: 'isCachedTest'};
+			const expected = 31337;
+			const firstPromise = function() {
 				return new Promise((resolve) => {
 					resolve(expected);
 				});
 			};
-			var secondPromise = function() {
+
+			const secondPromise = function() {
 				return new Promise((resolve) => {
 					resolve(12345);
 				});
@@ -57,18 +58,19 @@ function testMainApi() {
 
 		function optionsInDiffOrder() {
 			// arrange
-			var treasury = new Treasury();
-			var opts1 = {namespace: 'optionsInDiffOrder', cat: 'Movies', ttl: 400};
-			var opts2 = {ttl: 400, namespace: 'optionsInDiffOrder', cat: 'Movies'};
-			var expected = 31337;
-			var wasSecondPromiseCalled = false;
-			var firstPromise = function() {
+			const treasury = new Treasury();
+			const opts1 = {namespace: 'optionsInDiffOrder', cat: 'Movies', ttl: 400};
+			const opts2 = {ttl: 400, namespace: 'optionsInDiffOrder', cat: 'Movies'};
+			let expected = 31337;
+			let wasSecondPromiseCalled = false;
+			const firstPromise = function() {
 				return new Promise((resolve) => {
 					expected = parseInt(Math.random() * 1000);
 					resolve(expected);
 				});
 			};
-			var secondPromise = function() {
+
+			const secondPromise = function() {
 				return new Promise((resolve) => {
 					wasSecondPromiseCalled = true;
 					resolve(Math.random() * 1000);
@@ -93,8 +95,8 @@ function testMainApi() {
 
 		function notCached() {
 			// arrange
-			var treasury = new Treasury();
-			var opts = {namespace: 'del_notCached'};
+			const treasury = new Treasury();
+			const opts = {namespace: 'del_notCached'};
 
 			// act
 			return treasury.divest(opts);
@@ -102,15 +104,16 @@ function testMainApi() {
 
 		function delCached() {
 			// arrange
-			var treasury = new Treasury();
-			var opts = {namespace: 'delCached', addValue: 2};
-			var expected = 42;
-			var firstPromise = function() {
+			const treasury = new Treasury();
+			const opts = {namespace: 'delCached', addValue: 2};
+			const expected = 42;
+			const firstPromise = function() {
 				return new Promise((resolve) => {
 					resolve(31337);
 				});
 			};
-			var secondPromise = function(options) {
+
+			const secondPromise = function(options) {
 				return new Promise((resolve) => {
 					resolve(40 + options.addValue);
 				});

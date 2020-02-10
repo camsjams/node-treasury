@@ -1,9 +1,10 @@
-var chai = require('chai');
-var adapters = require('../../../lib/adapters');
-var Memcached = require('memcached');
-var _rewire = require('rewire');
-var Treasury = _rewire('../../../index');
-var promiseFactory = Treasury.__get__('nativePromise');
+const chai = require('chai');
+const adapters = require('../../../lib/adapters');
+const Memcached = require('memcached');
+const _rewire = require('rewire');
+
+const Treasury = _rewire('../../../index');
+const promiseFactory = Treasury.__get__('nativePromise');
 
 describe('Test Memcached client and adapter', testMemcached);
 
@@ -18,10 +19,10 @@ function testMemcached() {
 
 	function getMemcachedAdapter(done) {
 		// arrange
-		var memcached = new Memcached();
+		const memcached = new Memcached();
 
 		// act
-		var result = adapters.getClientAdapter(memcached, promiseFactory);
+		const result = adapters.getClientAdapter(memcached, promiseFactory);
 
 		// assert
 		chai.assert.typeOf(result, 'Object');
@@ -38,8 +39,8 @@ function testMemcached() {
 
 	function getDataFromEmpty() {
 		// arrange
-		var client = new Memcached();
-		var memcachedAdapter = adapters.getClientAdapter(client, promiseFactory);
+		const client = new Memcached();
+		const memcachedAdapter = adapters.getClientAdapter(client, promiseFactory);
 
 		// act
 		return memcachedAdapter.get('newKey')
@@ -55,8 +56,8 @@ function testMemcached() {
 
 	function setData() {
 		// arrange
-		var client = new Memcached();
-		var memcachedAdapter = adapters.getClientAdapter(client, promiseFactory);
+		const client = new Memcached();
+		const memcachedAdapter = adapters.getClientAdapter(client, promiseFactory);
 
 		// act
 		return memcachedAdapter.set('aCoolKey', {a: true}, 10)
@@ -68,9 +69,9 @@ function testMemcached() {
 
 	function setAndGetData() {
 		// arrange
-		var client = new Memcached();
-		var memcachedAdapter = adapters.getClientAdapter(client, promiseFactory);
-		var cacheKey = 'setAndGetData';
+		const client = new Memcached();
+		const memcachedAdapter = adapters.getClientAdapter(client, promiseFactory);
+		const cacheKey = 'setAndGetData';
 
 		// act
 		return memcachedAdapter.set(cacheKey, {a: true}, 10)
@@ -84,9 +85,9 @@ function testMemcached() {
 
 	function setAndGetExpiredData() {
 		// arrange
-		var client = new Memcached();
-		var memcachedAdapter = adapters.getClientAdapter(client, promiseFactory);
-		var cacheKey = 'setAndGetExpiredData';
+		const client = new Memcached();
+		const memcachedAdapter = adapters.getClientAdapter(client, promiseFactory);
+		const cacheKey = 'setAndGetExpiredData';
 
 		// act
 		return memcachedAdapter.set(cacheKey, {a: true}, 1)
@@ -104,9 +105,9 @@ function testMemcached() {
 
 	function deleteData() {
 		// arrange
-		var client = new Memcached();
-		var memcachedAdapter = adapters.getClientAdapter(client, promiseFactory);
-		var cacheKey = 'numberOfCats_deleteData';
+		const client = new Memcached();
+		const memcachedAdapter = adapters.getClientAdapter(client, promiseFactory);
+		const cacheKey = 'numberOfCats_deleteData';
 
 		// act
 		return memcachedAdapter.set(cacheKey, 101, 100)
@@ -118,9 +119,9 @@ function testMemcached() {
 
 	function deleteAndGetData() {
 		// arrange
-		var client = new Memcached();
-		var memcachedAdapter = adapters.getClientAdapter(client, promiseFactory);
-		var cacheKey = 'numberOfCats_deleteAndGetData';
+		const client = new Memcached();
+		const memcachedAdapter = adapters.getClientAdapter(client, promiseFactory);
+		const cacheKey = 'numberOfCats_deleteAndGetData';
 
 		// act
 		return memcachedAdapter.set(cacheKey, 101, 100)

@@ -1,5 +1,5 @@
-var chai = require('chai');
-var Treasury = require('../../index');
+const chai = require('chai');
+const Treasury = require('../../index');
 
 describe('Test supported promise factories', testPromiseFactories);
 
@@ -8,7 +8,7 @@ function testPromiseFactories() {
 	describe('#testQ', testQ);
 	describe('#testBluebird', testBluebird);
 
-	var expected = 12345;
+	const expected = 12345;
 
 	function samplePromisedValue() {
 		return new Promise((resolve) => {
@@ -21,7 +21,7 @@ function testPromiseFactories() {
 
 		function basicPromise() {
 			// arrange
-			var treasury = new Treasury();
+			const treasury = new Treasury();
 
 			// act
 			return treasury.invest(samplePromisedValue)
@@ -37,7 +37,7 @@ function testPromiseFactories() {
 
 		function basicPromise() {
 			// arrange
-			var treasury = new Treasury({promiseFactory: require('q').Promise});
+			const treasury = new Treasury({promiseFactory: require('q').Promise});
 
 			// act
 			return treasury.invest(samplePromisedValue)
@@ -53,7 +53,7 @@ function testPromiseFactories() {
 
 		function basicPromise() {
 			// arrange
-			var treasury = new Treasury({promiseFactory: require('bluebird')});
+			const treasury = new Treasury({promiseFactory: require('bluebird')});
 
 			// act
 			return treasury.invest(samplePromisedValue)

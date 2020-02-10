@@ -1,8 +1,9 @@
-var chai = require('chai');
-var adapters = require('../../lib/adapters');
-var _rewire = require('rewire');
-var Treasury = _rewire('../../index');
-var promiseFactory = Treasury.__get__('nativePromise');
+const chai = require('chai');
+const adapters = require('../../lib/adapters');
+const _rewire = require('rewire');
+
+const Treasury = _rewire('../../index');
+const promiseFactory = Treasury.__get__('nativePromise');
 
 describe('Test supported clients and adapter utils', testGetClientAdapter);
 
@@ -14,8 +15,8 @@ function testGetClientAdapter() {
 
 	function undefClient(done) {
 		// arrange
-		var result;
-		var error;
+		let result;
+		let error;
 
 		// act
 		try {
@@ -34,8 +35,8 @@ function testGetClientAdapter() {
 
 	function falsyClient(done) {
 		// arrange
-		var result;
-		var error;
+		let result;
+		let error;
 
 		// act
 		try {
@@ -55,7 +56,7 @@ function testGetClientAdapter() {
 	function nullClient(done) {
 		// arrange
 		// act
-		var result = adapters.getClientAdapter(null, promiseFactory);
+		const result = adapters.getClientAdapter(null, promiseFactory);
 
 		// assert
 		chai.assert.typeOf(result, 'Object');
@@ -71,9 +72,9 @@ function testGetClientAdapter() {
 
 	function unknownClient(done) {
 		// arrange
-		var aFakeClient = new FakeClient();
-		var result;
-		var error;
+		const aFakeClient = new FakeClient();
+		let result;
+		let error;
 
 		// act
 		try {

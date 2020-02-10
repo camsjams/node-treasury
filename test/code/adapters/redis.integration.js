@@ -1,9 +1,10 @@
-var chai = require('chai');
-var adapters = require('../../../lib/adapters');
-var redis = require('redis');
-var _rewire = require('rewire');
-var Treasury = _rewire('../../../index');
-var promiseFactory = Treasury.__get__('nativePromise');
+const chai = require('chai');
+const adapters = require('../../../lib/adapters');
+const redis = require('redis');
+const _rewire = require('rewire');
+
+const Treasury = _rewire('../../../index');
+const promiseFactory = Treasury.__get__('nativePromise');
 
 describe('Test redis client and adapter', testRedis);
 
@@ -18,10 +19,10 @@ function testRedis() {
 
 	function getRedisAdapter(done) {
 		// arrange
-		var client = redis.createClient();
+		const client = redis.createClient();
 
 		// act
-		var result = adapters.getClientAdapter(client, promiseFactory);
+		const result = adapters.getClientAdapter(client, promiseFactory);
 
 		// assert
 		chai.assert.typeOf(result, 'Object');
@@ -38,8 +39,8 @@ function testRedis() {
 
 	function getDataFromEmpty() {
 		// arrange
-		var client = redis.createClient();
-		var redisAdapter = adapters.getClientAdapter(client, promiseFactory);
+		const client = redis.createClient();
+		const redisAdapter = adapters.getClientAdapter(client, promiseFactory);
 
 		// act
 		return redisAdapter.get('newKey')
@@ -55,8 +56,8 @@ function testRedis() {
 
 	function setData() {
 		// arrange
-		var client = redis.createClient();
-		var redisAdapter = adapters.getClientAdapter(client, promiseFactory);
+		const client = redis.createClient();
+		const redisAdapter = adapters.getClientAdapter(client, promiseFactory);
 
 		// act
 		return redisAdapter.set('aCoolKey', {a: true}, 10)
@@ -68,9 +69,9 @@ function testRedis() {
 
 	function setAndGetData() {
 		// arrange
-		var client = redis.createClient();
-		var redisAdapter = adapters.getClientAdapter(client, promiseFactory);
-		var cacheKey = 'setAndGetData';
+		const client = redis.createClient();
+		const redisAdapter = adapters.getClientAdapter(client, promiseFactory);
+		const cacheKey = 'setAndGetData';
 
 		// act
 		return redisAdapter.set(cacheKey, {a: true}, 15)
@@ -84,9 +85,9 @@ function testRedis() {
 
 	function setAndGetExpiredData() {
 		// arrange
-		var client = redis.createClient();
-		var redisAdapter = adapters.getClientAdapter(client, promiseFactory);
-		var cacheKey = 'setAndGetExpiredData';
+		const client = redis.createClient();
+		const redisAdapter = adapters.getClientAdapter(client, promiseFactory);
+		const cacheKey = 'setAndGetExpiredData';
 
 		// act
 		return redisAdapter.set(cacheKey, {a: true}, 1)
@@ -104,9 +105,9 @@ function testRedis() {
 
 	function deleteData() {
 		// arrange
-		var client = redis.createClient();
-		var redisAdapter = adapters.getClientAdapter(client, promiseFactory);
-		var cacheKey = 'numberOfCats:deleteData';
+		const client = redis.createClient();
+		const redisAdapter = adapters.getClientAdapter(client, promiseFactory);
+		const cacheKey = 'numberOfCats:deleteData';
 
 		// act
 		return redisAdapter.set(cacheKey, 101, 100)
@@ -118,9 +119,9 @@ function testRedis() {
 
 	function deleteAndGetData() {
 		// arrange
-		var client = redis.createClient();
-		var redisAdapter = adapters.getClientAdapter(client, promiseFactory);
-		var cacheKey = 'numberOfCats:deleteAndGetData';
+		const client = redis.createClient();
+		const redisAdapter = adapters.getClientAdapter(client, promiseFactory);
+		const cacheKey = 'numberOfCats:deleteAndGetData';
 
 		// act
 		return redisAdapter.set(cacheKey, 101, 100)

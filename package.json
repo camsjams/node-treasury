@@ -1,11 +1,13 @@
 {
   "name": "treasury",
-  "version": "1.0.2",
+  "version": "2.0.0",
   "description": "Check your caching layer before running your promises",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
-    "test": "mocha test/code/*.js test/code/**/*.js",
-    "lint": "./node_modules/.bin/eslint . --ext .js"
+    "build": "tsc",
+    "lint": "tsc --noEmit && eslint \"**/*.{js,ts}\" --quiet --fix",
+    "test": "jest --forceExit --coverage --verbose --detectOpenHandles"
   },
   "repository": {
     "type": "git",
@@ -24,17 +26,24 @@
   },
   "homepage": "https://github.com/camsjams/node-treasury#readme",
   "dependencies": {
-    "tauist": "^1.0.1",
-    "json-stable-stringify": "^1.0.1"
+    "tauist": "1.1.0",
+    "json-stable-stringify": "1.0.1"
   },
   "devDependencies": {
-    "bluebird": "^3.4.6",
-    "chai": "^3.4.1",
-    "eslint": "3.12.0",
-    "memcached": "^2.2.2",
-    "mocha": "2.3.4",
-    "q": "^1.4.1",
-    "redis": "^2.6.3",
-    "rewire": "^2.5.1"
+    "@types/eslint": "6.1.7",
+    "@types/jest": "25.1.1",
+    "@types/json-stable-stringify": "1.0.32",
+    "@types/node": "13.7.0",
+    "@typescript-eslint/eslint-plugin": "2.18.0",
+    "@typescript-eslint/parser": "2.18.0",
+    "eslint": "6.4.0",
+    "eslint-plugin-import": "2.14.0",
+    "eslint-plugin-jest": "23.6.0",
+    "eslint-plugin-promise": "4.0.1",
+    "eslint-plugin-security": "1.4.0",
+    "jest": "25.1.0",
+    "memcached": "2.2.2",
+    "redis": "3.0.2",
+    "typescript": "3.7.5"
   }
 }

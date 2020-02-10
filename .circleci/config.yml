@@ -1,29 +1,16 @@
-machine:
-  environment:
-      PATH: "${PATH}:${HOME}/${CIRCLE_PROJECT_REPONAME}/node_modules/.bin"
-
-  timezone:
-    UTC
-
-  node:
-    version:
-      4.0.0
-
-  services:
-    - redis
-    - memcached
-
-dependencies:
-  pre:
-    - npm prune
-  override:
-    - yarn
-  cache_directories:
-    - ~/.cache/yarn
-
-test:
-  pre:
-    - yarn run lint
-
-  override:
-    - yarn test
+version: 2
+jobs:
+  build:
+    working_directory: /var/www
+    docker:
+      - image: node:10.16.0-alpine
+        environment:
+          NODE_ENV: test
+    environment:
+      TZ: "/usr/share/zoneinfo/Etc/UTC"
+    steps:
+      - checkout
+      - run: npm install
+      - run: npm audit
+      - run: npm run lint
+      - run: npm test

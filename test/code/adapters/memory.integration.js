@@ -1,8 +1,9 @@
-var chai = require('chai');
-var adapters = require('../../../lib/adapters');
-var _rewire = require('rewire');
-var Treasury = _rewire('../../../index');
-var promiseFactory = Treasury.__get__('nativePromise');
+const chai = require('chai');
+const adapters = require('../../../lib/adapters');
+const _rewire = require('rewire');
+
+const Treasury = _rewire('../../../index');
+const promiseFactory = Treasury.__get__('nativePromise');
 
 describe('Test memory client and adapter', testMemory);
 
@@ -18,7 +19,7 @@ function testMemory() {
 	function getMemoryAdapter(done) {
 		// arrange
 		// act
-		var result = adapters.getClientAdapter(null, promiseFactory);
+		const result = adapters.getClientAdapter(null, promiseFactory);
 
 		// assert
 		chai.assert.typeOf(result, 'Object');
@@ -35,7 +36,7 @@ function testMemory() {
 
 	function getDataFromEmpty() {
 		// arrange
-		var memoryAdapter = adapters.getClientAdapter(null, promiseFactory);
+		const memoryAdapter = adapters.getClientAdapter(null, promiseFactory);
 
 		// act
 		return memoryAdapter.get('newKey')
@@ -51,7 +52,7 @@ function testMemory() {
 
 	function setData() {
 		// arrange
-		var memoryAdapter = adapters.getClientAdapter(null, promiseFactory);
+		const memoryAdapter = adapters.getClientAdapter(null, promiseFactory);
 
 		// act
 		return memoryAdapter.set('aCoolKey', {a: true}, 10)
@@ -63,8 +64,8 @@ function testMemory() {
 
 	function setAndGetData() {
 		// arrange
-		var memoryAdapter = adapters.getClientAdapter(null, promiseFactory);
-		var cacheKey = 'hasA';
+		const memoryAdapter = adapters.getClientAdapter(null, promiseFactory);
+		const cacheKey = 'hasA';
 
 		// act
 		return memoryAdapter.set(cacheKey, {a: true}, 10)
@@ -78,8 +79,8 @@ function testMemory() {
 
 	function setAndGetExpiredData() {
 		// arrange
-		var memoryAdapter = adapters.getClientAdapter(null, promiseFactory);
-		var cacheKey = 'hasA';
+		const memoryAdapter = adapters.getClientAdapter(null, promiseFactory);
+		const cacheKey = 'hasA';
 
 		// act
 		return memoryAdapter.set(cacheKey, {a: true}, 1)
@@ -97,8 +98,8 @@ function testMemory() {
 
 	function deleteData() {
 		// arrange
-		var memoryAdapter = adapters.getClientAdapter(null, promiseFactory);
-		var cacheKey = 'numberOfCats';
+		const memoryAdapter = adapters.getClientAdapter(null, promiseFactory);
+		const cacheKey = 'numberOfCats';
 
 		// act
 		return memoryAdapter.set(cacheKey, 101, 100)
@@ -110,8 +111,8 @@ function testMemory() {
 
 	function deleteAndGetData() {
 		// arrange
-		var memoryAdapter = adapters.getClientAdapter(null, promiseFactory);
-		var cacheKey = 'numberOfCats';
+		const memoryAdapter = adapters.getClientAdapter(null, promiseFactory);
+		const cacheKey = 'numberOfCats';
 
 		// act
 		return memoryAdapter.set(cacheKey, 101, 100)

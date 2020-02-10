@@ -1,7 +1,8 @@
-var chai = require('chai');
-var Treasury = require('../../../index');
-var Memcached = require('memcached');
-var client = new Memcached();
+const chai = require('chai');
+const Treasury = require('../../../index');
+const Memcached = require('memcached');
+
+const client = new Memcached();
 
 describe('Test main Treasury public API using memcached', testMainApi);
 
@@ -16,9 +17,9 @@ function testMainApi() {
 
 		function notCached() {
 			// arrange
-			var treasury = new Treasury({client: client});
-			var expected = 'I made a promise Mr. Frodo.';
-			var samplePromise = function() {
+			const treasury = new Treasury({client});
+			const expected = 'I made a promise Mr. Frodo.';
+			const samplePromise = function() {
 				return new Promise((resolve) => {
 					resolve(expected);
 				});
@@ -34,15 +35,16 @@ function testMainApi() {
 
 		function isCached() {
 			// arrange
-			var treasury = new Treasury({client: client});
-			var opts = {namespace: 'isCachedTest', ttl: 25};
-			var expected = 31337;
-			var firstPromise = function() {
+			const treasury = new Treasury({client});
+			const opts = {namespace: 'isCachedTest', ttl: 25};
+			const expected = 31337;
+			const firstPromise = function() {
 				return new Promise((resolve) => {
 					resolve(expected);
 				});
 			};
-			var secondPromise = function() {
+
+			const secondPromise = function() {
 				return new Promise((resolve) => {
 					resolve(12345);
 				});
@@ -59,18 +61,19 @@ function testMainApi() {
 
 		function optionsInDiffOrder() {
 			// arrange
-			var treasury = new Treasury({client: client});
-			var opts1 = {namespace: 'optionsInDiffOrder', cat: 'Movies', ttl: 25};
-			var opts2 = {ttl: 25, namespace: 'optionsInDiffOrder', cat: 'Movies'};
-			var expected = 31337;
-			var wasSecondPromiseCalled = false;
-			var firstPromise = function() {
+			const treasury = new Treasury({client});
+			const opts1 = {namespace: 'optionsInDiffOrder', cat: 'Movies', ttl: 25};
+			const opts2 = {ttl: 25, namespace: 'optionsInDiffOrder', cat: 'Movies'};
+			let expected = 31337;
+			let wasSecondPromiseCalled = false;
+			const firstPromise = function() {
 				return new Promise((resolve) => {
 					expected = parseInt(Math.random() * 1000);
 					resolve(expected);
 				});
 			};
-			var secondPromise = function() {
+
+			const secondPromise = function() {
 				return new Promise((resolve) => {
 					wasSecondPromiseCalled = true;
 					resolve(Math.random() * 1000);
@@ -95,8 +98,8 @@ function testMainApi() {
 
 		function notCached() {
 			// arrange
-			var treasury = new Treasury({client: client});
-			var opts = {namespace: 'del_notCached', ttl: 25};
+			const treasury = new Treasury({client});
+			const opts = {namespace: 'del_notCached', ttl: 25};
 
 			// act
 			return treasury.divest(opts);
@@ -104,15 +107,16 @@ function testMainApi() {
 
 		function delCached() {
 			// arrange
-			var treasury = new Treasury({client: client});
-			var opts = {namespace: 'delCached', addValue: 2, ttl: 25};
-			var expected = 42;
-			var firstPromise = function() {
+			const treasury = new Treasury({client});
+			const opts = {namespace: 'delCached', addValue: 2, ttl: 25};
+			const expected = 42;
+			const firstPromise = function() {
 				return new Promise((resolve) => {
 					resolve(31337);
 				});
 			};
-			var secondPromise = function(options) {
+
+			const secondPromise = function(options) {
 				return new Promise((resolve) => {
 					resolve(40 + options.addValue);
 				});
