@@ -7,7 +7,7 @@
   "scripts": {
     "build": "tsc",
     "lint": "tsc --noEmit && eslint \"**/*.{js,ts}\" --quiet --fix",
-    "test": "jest ./src/adapters/redis.integration.test.ts --forceExit --coverage --verbose --detectOpenHandles"
+    "test": "jest --forceExit --coverage --verbose --detectOpenHandles"
   },
   "repository": {
     "type": "git",
@@ -30,7 +30,6 @@
     "json-stable-stringify": "1.0.1"
   },
   "devDependencies": {
-    "@types/chai": "4.2.8",
     "@types/eslint": "6.1.7",
     "@types/jest": "25.1.1",
     "@types/json-stable-stringify": "1.0.32",
@@ -40,7 +39,6 @@
     "@types/sinon": "7.5.1",
     "@typescript-eslint/eslint-plugin": "2.18.0",
     "@typescript-eslint/parser": "2.18.0",
-    "chai": "4.2.0",
     "eslint": "6.4.0",
     "eslint-plugin-import": "2.14.0",
     "eslint-plugin-jest": "23.6.0",

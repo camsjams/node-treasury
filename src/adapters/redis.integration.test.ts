@@ -64,7 +64,7 @@ test('RedisAdapter should set then get bad data from cache', async () => {
 	// arrange
 	expect.assertions(2);
 	const adapter = new RedisAdapter(client);
-	const cacheKey = 'hasA';
+	const cacheKey = 'setThenExpire';
 
 	// act
 	const setResult = await adapter.set(cacheKey, {a: true}, 1);

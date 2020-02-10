@@ -1,4 +1,3 @@
-import chai from 'chai';
 import getKey from './getKey';
 
 test('should accept empty options', () => {
@@ -8,8 +7,7 @@ test('should accept empty options', () => {
 	const result = getKey();
 
 	// assert
-	chai.assert.typeOf(result, 'String');
-	chai.assert.equal(result, 'Treasury:99914b932bd37a50b983c5e7c90ae93b');
+	expect(result).toEqual('Treasury:99914b932bd37a50b983c5e7c90ae93b');
 });
 
 test('should accept null options', () => {
@@ -19,8 +17,7 @@ test('should accept null options', () => {
 	const result = getKey(null, null);
 
 	// assert
-	chai.assert.typeOf(result, 'String');
-	chai.assert.equal(result, 'Treasury:99914b932bd37a50b983c5e7c90ae93b');
+	expect(result).toEqual('Treasury:99914b932bd37a50b983c5e7c90ae93b');
 });
 
 test('should accept full options', () => {
@@ -30,8 +27,7 @@ test('should accept full options', () => {
 	const result = getKey({a: 1}, 'CustomNs');
 
 	// assert
-	chai.assert.typeOf(result, 'String');
-	chai.assert.equal(result, 'CustomNs:bb6cb5c68df4652941caf652a366f2d8');
+	expect(result).toEqual('CustomNs:bb6cb5c68df4652941caf652a366f2d8');
 });
 
 test('should get same key', () => {
@@ -49,6 +45,5 @@ test('should get same key', () => {
 	const result = getKey(fpo, 'NS');
 
 	// assert
-	chai.assert.typeOf(result, 'String');
-	chai.assert.equal(result, expected);
+	expect(result).toEqual(expected);
 });

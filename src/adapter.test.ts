@@ -1,4 +1,3 @@
-import chai from 'chai';
 import sinon from 'sinon';
 import getAdapter from './adapter';
 
@@ -15,9 +14,8 @@ test('should throw error for undefined as invalid_client', () => {
 	}
 
 	// assert
-	chai.assert.strictEqual(result, undefined);
-	chai.assert.typeOf(error, 'Error');
-	chai.assert.equal(error.message, 'invalid_client');
+	expect(result).toEqual(undefined);
+	expect(error.message).toEqual('invalid_client');
 });
 
 test('should throw error for falsy as invalid_client', () => {
@@ -33,9 +31,8 @@ test('should throw error for falsy as invalid_client', () => {
 	}
 
 	// assert
-	chai.assert.strictEqual(result, undefined);
-	chai.assert.typeOf(error, 'Error');
-	chai.assert.equal(error.message, 'invalid_client');
+	expect(result).toEqual(undefined);
+	expect(error.message).toEqual('invalid_client');
 });
 
 test('should return default client adapter', () => {
@@ -44,11 +41,8 @@ test('should return default client adapter', () => {
 	const result = getAdapter(null);
 
 	// assert
-	chai.assert.typeOf(result, 'Object');
-	chai.assert.typeOf(result.get, 'Function');
-	chai.assert.typeOf(result.set, 'Function');
-	chai.assert.typeOf(result.del, 'Function');
-	chai.assert.typeOf(result.client, 'Null');
+	expect(result).toBeTruthy();
+	expect(result.constructor.name).toEqual('MemoryClientAdapter');
 });
 
 test('should return Redis client adapter', () => {
@@ -63,11 +57,8 @@ test('should return Redis client adapter', () => {
 	const result = getAdapter(EXPECTED);
 
 	// assert
-	chai.assert.typeOf(result, 'Object');
-	chai.assert.typeOf(result.get, 'Function');
-	chai.assert.typeOf(result.set, 'Function');
-	chai.assert.typeOf(result.del, 'Function');
 	expect(result.client).toEqual(EXPECTED);
+	expect(result.constructor.name).toEqual('RedisClientAdapter');
 });
 
 test('should return Memcached client adapter', () => {
@@ -82,11 +73,8 @@ test('should return Memcached client adapter', () => {
 	const result = getAdapter(EXPECTED);
 
 	// assert
-	chai.assert.typeOf(result, 'Object');
-	chai.assert.typeOf(result.get, 'Function');
-	chai.assert.typeOf(result.set, 'Function');
-	chai.assert.typeOf(result.del, 'Function');
 	expect(result.client).toEqual(EXPECTED);
+	expect(result.constructor.name).toEqual('MemcachedClientAdapter');
 });
 
 test('should throw error for unknown as unknown_client', () => {
@@ -102,7 +90,6 @@ test('should throw error for unknown as unknown_client', () => {
 	}
 
 	// assert
-	chai.assert.strictEqual(result, undefined);
-	chai.assert.typeOf(error, 'Error');
-	chai.assert.equal(error.message, 'unknown_client');
+	expect(result).toEqual(undefined);
+	expect(error.message).toEqual('unknown_client');
 });

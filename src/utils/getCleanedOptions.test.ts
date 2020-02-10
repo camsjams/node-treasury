@@ -1,4 +1,3 @@
-import chai from 'chai';
 import getCleanedOptions from './getCleanedOptions';
 
 test('should accept undefined options', () => {
@@ -8,10 +7,8 @@ test('should accept undefined options', () => {
 	const result = getCleanedOptions();
 
 	// assert
-	chai.assert.typeOf(result, 'Object');
-	chai.assert.typeOf(result.client, 'Null');
-	chai.assert.equal(result.ttl, 300);
-	chai.assert.equal(result.namespace, 'Treasury');
+	expect(result.ttl).toEqual(300);
+	expect(result.namespace).toEqual('Treasury');
 });
 
 test('should accept null options', () => {
@@ -21,10 +18,8 @@ test('should accept null options', () => {
 	const result = getCleanedOptions(null);
 
 	// assert
-	chai.assert.typeOf(result, 'Object');
-	chai.assert.typeOf(result.client, 'Null');
-	chai.assert.equal(result.ttl, 300);
-	chai.assert.equal(result.namespace, 'Treasury');
+	expect(result.ttl).toEqual(300);
+	expect(result.namespace).toEqual('Treasury');
 });
 
 test('should accept empty options', () => {
@@ -34,10 +29,8 @@ test('should accept empty options', () => {
 	const result = getCleanedOptions({});
 
 	// assert
-	chai.assert.typeOf(result, 'Object');
-	chai.assert.typeOf(result.client, 'Null');
-	chai.assert.equal(result.ttl, 300);
-	chai.assert.equal(result.namespace, 'Treasury');
+	expect(result.ttl).toEqual(300);
+	expect(result.namespace).toEqual('Treasury');
 });
 
 test('should accept a ttl', () => {
@@ -47,9 +40,7 @@ test('should accept a ttl', () => {
 	const result = getCleanedOptions({ttl: 1337});
 
 	// assert
-	chai.assert.typeOf(result, 'Object');
-	chai.assert.equal(result.ttl, 1337);
-
+	expect(result.ttl).toEqual(1337);
 });
 
 test('should accept a namespace', () => {
@@ -59,8 +50,7 @@ test('should accept a namespace', () => {
 	const result = getCleanedOptions({namespace: 'ScroogeMcDuck'});
 
 	// assert
-	chai.assert.typeOf(result, 'Object');
-	chai.assert.equal(result.namespace, 'ScroogeMcDuck');
+	expect(result.namespace).toEqual('ScroogeMcDuck');
 
 });
 
@@ -73,7 +63,5 @@ test('should accept a client', () => {
 	const result = getCleanedOptions({client: myFakeClient});
 
 	// assert
-	chai.assert.typeOf(result, 'Object');
-	chai.assert.typeOf(result.client, 'Function');
-	chai.assert.deepEqual(result.client, myFakeClient);
+	expect(result.client).toEqual(myFakeClient);
 });
