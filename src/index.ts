@@ -13,7 +13,7 @@ export type DivestOptions = {
 }
 
 class Treasury {
-	config: TreasuryOptions;
+	config: TreasuryConfig;
 
 	treasury: TreasuryAdapter;
 

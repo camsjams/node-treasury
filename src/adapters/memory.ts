@@ -15,7 +15,7 @@ class MemoryClientAdapter extends BaseAdapter {
 			return Promise.resolve(item as unknown as T);
 		}
 
-		Promise.reject(null);
+		return Promise.reject(null);
 	}
 
 	set<T>(key: string, value: T, ttl: number): Promise<true> {

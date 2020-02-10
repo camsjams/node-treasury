@@ -5,15 +5,15 @@ class BaseAdapter {
 		this.client = client;
 	}
 
-	get<T>(key: string): Promise<T> {
+	get<T>(key: string): Promise<T> { // eslint-disable-line no-unused-vars
 		return Promise.resolve({} as T);
 	}
 
-	set<T>(key: string, value: T, ttl: number): Promise<true> {
+	set<T>(key: string, value: T, ttl: number): Promise<true> { // eslint-disable-line no-unused-vars
 		return Promise.resolve(true);
 	}
 
-	del(key: string): Promise<true> {
+	del(key: string): Promise<true> { // eslint-disable-line no-unused-vars
 		return Promise.resolve(true);
 	}
 
@@ -22,6 +22,7 @@ class BaseAdapter {
 		try {
 			parsed = JSON.parse(value);
 		} catch (e) {
+			parsed = null;
 		}
 
 		return parsed;

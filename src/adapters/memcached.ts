@@ -3,15 +3,13 @@ import BaseAdapter from './base';
 class MemcachedClientAdapter extends BaseAdapter {
 	get<T>(key: string): Promise<T> {
 		const memcachedClient = this.client as MemcachedTreasuryClient;
-		const self = this;
-
 		return new Promise((resolve, reject) => {
 			memcachedClient.get(key, (error, results) => {
 				if (error || results === undefined) {
 					return reject(null);
 				}
 
-				resolve(self.parseJson(results) as unknown as T);
+				resolve(this.parseJson(results) as unknown as T);
 			});
 		});
 	}
