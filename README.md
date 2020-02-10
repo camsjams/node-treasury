@@ -157,63 +157,6 @@ treasury.invest(doTheThingToReallyGetData({id: id}))
     });
 ```
 
-### Sails.js
-Here is a sample [Sails.js](https://github.com/balderdashy/sails) controller that caches model data into memory. Without Treasury, notice all the duplicated logic for handling cache that will be spread about your codebase.
-``` js
-testit: function(req, res) {
-    var params = req.allParams();
-    var id = params.id;
-    var key = 'MyModel:' + id;
-
-    cacheClient.getAsync(key)
-        .then(function(data) {
-            console.log(key + ' isInCache =', !!data);
-            if (data) {
-                return res.ok(JSON.parse(data));
-            }
-
-            return Promise.reject('NO_CACHE');
-        })
-        .catch(function(err) {
-            if (err !== 'NO_CACHE') {
-                return Promise.reject(err);
-            }
-
-            User.find(id)
-                .then(function(modelData) {
-                    // return data; also cache
-                    console.log(key + ' not in cache, retrieved:', modelData);
-                    return cacheClient.setexAsync(key, 10, JSON.stringify(modelData))
-                        .then(function() {
-                            res.ok(modelData);
-                        });
-                })
-                .catch(function(error) {
-                    res.serverError(error);
-                });
-
-        });
-}
-```
-
-With the addition of the lightweight Treasury, you can save the boilerplate!
-``` js
-testit: function(req, res) {
-    var params = req.allParams();
-    var id = params.id;
-
-    treasury.invest(User.find.bind(User, id), {id: id})
-        .then(function(modelData) {
-            console.log('treasury.invest found data:', modelData);
-            res.ok(modelData);
-        })
-        .catch(function(error) {
-            console.log('treasury.invest could not find data, err', error);
-            res.serverError(error);
-        });
-}
-```
-
 ## Pull Requests
 In order to properly run the tests for this repo, on top of the npm install, you will need the dependencies in [Circle CI config](.circle/config.yml). All PRs require passing JSHint, JavaScript Code Style Checker (JSCS), and updated/added/passing unit and integration tests.
 
