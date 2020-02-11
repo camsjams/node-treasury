@@ -1,3 +1,30 @@
+export interface TreasuryClient {
+	get: (key: string, callback: Callback) => void;
+	del: (key: string, callback: Callback) => void;
+}
+
+export type Callback = (error: Error, results: string) => void;
+
+interface RedisTreasuryClient extends TreasuryClient {
+	setex: (key: string, expiresIn: number, value: string, callback: Callback) => void;
+}
+
+interface MemcachedTreasuryClient extends TreasuryClient {
+	set: (key: string, value: string, expiresIn: number, callback: Callback) => void;
+}
+
+type TreasuryAdapter = {
+	client: TreasuryClient;
+
+	get<T>(key: string): Promise<T>;
+
+	set<T>(key: string, value: T, ttl: number): Promise<true>;
+
+	del(key: string): Promise<true>;
+
+	parseJson(value: string): object;
+}
+
 class BaseAdapter {
 	client: TreasuryClient;
 

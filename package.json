@@ -1,11 +1,11 @@
 {
   "name": "treasury",
-  "version": "2.0.0",
+  "version": "2.0.3",
   "description": "Check your caching layer before running your promises",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && cp 'src/declarations.d.ts' 'dist/declarations.d.ts'",
     "lint": "tsc --noEmit && eslint \"**/*.{js,ts}\" --quiet --fix",
     "test": "jest --forceExit --coverage --verbose --detectOpenHandles"
   },
@@ -26,7 +26,7 @@
   },
   "homepage": "https://github.com/camsjams/node-treasury#readme",
   "dependencies": {
-    "tauist": "1.1.0",
+    "tauist": "1.1.1",
     "json-stable-stringify": "1.0.1"
   },
   "devDependencies": {

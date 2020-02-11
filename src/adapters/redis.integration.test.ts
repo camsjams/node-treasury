@@ -1,5 +1,6 @@
 import redis, {RedisClient} from 'redis';
 import RedisAdapter from './redis';
+import {TreasuryClient} from './base';
 
 let client: RedisClient;
 beforeAll(() => {
@@ -21,7 +22,7 @@ function waitPromise(): Promise<void> {
 test('RedisAdapter should reject when not found in cache', async () => {
 	// arrange
 	expect.assertions(1);
-	const adapter = new RedisAdapter(client);
+	const adapter = new RedisAdapter(client as unknown as TreasuryClient);
 
 	// act
 	try {
@@ -35,7 +36,7 @@ test('RedisAdapter should reject when not found in cache', async () => {
 test('RedisAdapter should set in cache', async () => {
 	// arrange
 	expect.assertions(1);
-	const adapter = new RedisAdapter(client);
+	const adapter = new RedisAdapter(client as unknown as TreasuryClient);
 
 	// act
 	const result = await adapter.set('aCoolKey', {a: true}, 10);
@@ -47,7 +48,7 @@ test('RedisAdapter should set in cache', async () => {
 test('RedisAdapter should set then get from cache', async () => {
 	// arrange
 	expect.assertions(2);
-	const adapter = new RedisAdapter(client);
+	const adapter = new RedisAdapter(client as unknown as TreasuryClient);
 	const EXPECTED = {a: true};
 	const cacheKey = 'hasA';
 
@@ -63,7 +64,7 @@ test('RedisAdapter should set then get from cache', async () => {
 test('RedisAdapter should set then get bad data from cache', async () => {
 	// arrange
 	expect.assertions(2);
-	const adapter = new RedisAdapter(client);
+	const adapter = new RedisAdapter(client as unknown as TreasuryClient);
 	const cacheKey = 'setThenExpire';
 
 	// act
@@ -82,7 +83,7 @@ test('RedisAdapter should set then get bad data from cache', async () => {
 test('RedisAdapter should delete from cache', async () => {
 	// arrange
 	expect.assertions(1);
-	const adapter = new RedisAdapter(client);
+	const adapter = new RedisAdapter(client as unknown as TreasuryClient);
 	const cacheKey = 'numberOfCats';
 
 	// act
@@ -96,7 +97,7 @@ test('RedisAdapter should delete from cache', async () => {
 test('RedisAdapter should delete from cache and not get later', async () => {
 	// arrange
 	expect.assertions(3);
-	const adapter = new RedisAdapter(client);
+	const adapter = new RedisAdapter(client as unknown as TreasuryClient);
 	const cacheKey = 'otherNumberOfCats';
 
 	// act

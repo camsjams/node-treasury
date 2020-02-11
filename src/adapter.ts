@@ -1,6 +1,19 @@
+import {TreasuryClient} from './adapters/base';
 import RedisClientAdapter from './adapters/redis';
 import MemcachedClientAdapter from './adapters/memcached';
 import MemoryClientAdapter from './adapters/memory';
+
+export type TreasuryAdapter = {
+	client: TreasuryClient;
+
+	get<T>(key: string): Promise<T>;
+
+	set<T>(key: string, value: T, ttl: number): Promise<true>;
+
+	del(key: string): Promise<true>;
+
+	parseJson(value: string): object;
+}
 
 const TYPE_REDIS = 'RedisClient';
 const TYPE_MEMCACHED = 'Client';
