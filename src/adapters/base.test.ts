@@ -1,12 +1,12 @@
 import sinon from 'sinon';
-import BaseAdapter from './base';
+import BaseAdapter, {TreasuryClient} from './base';
 
 test('base adapter should construct', () => {
 	// arrange
 	const client = sinon.stub();
 
 	// act
-	const result = new BaseAdapter(client);
+	const result = new BaseAdapter(client as unknown as TreasuryClient);
 
 	// assert
 	expect(result).toBeTruthy();
@@ -16,7 +16,7 @@ test('base adapter should construct', () => {
 test('base adapter should get', async () => {
 	// arrange
 	expect.assertions(1);
-	const adapter = new BaseAdapter(sinon.stub());
+	const adapter = new BaseAdapter(sinon.stub() as unknown as TreasuryClient);
 
 	// act
 	const result = await adapter.get('dogs');
@@ -28,7 +28,7 @@ test('base adapter should get', async () => {
 test('base adapter should set', async () => {
 	// arrange
 	expect.assertions(1);
-	const adapter = new BaseAdapter(sinon.stub());
+	const adapter = new BaseAdapter(sinon.stub() as unknown as TreasuryClient);
 
 	// act
 	const result = await adapter.set('dogs', 'dalmatians', 101);
@@ -40,7 +40,7 @@ test('base adapter should set', async () => {
 test('base adapter should del', async () => {
 	// arrange
 	expect.assertions(1);
-	const adapter = new BaseAdapter(sinon.stub());
+	const adapter = new BaseAdapter(sinon.stub() as unknown as TreasuryClient);
 
 	// act
 	const result = await adapter.del('dogs');
@@ -51,7 +51,7 @@ test('base adapter should del', async () => {
 
 test('base adapter should parseJson [failure]', () => {
 	// arrange
-	const adapter = new BaseAdapter(sinon.stub());
+	const adapter = new BaseAdapter(sinon.stub() as unknown as TreasuryClient);
 
 	// act
 	const result = adapter.parseJson('dogs');
@@ -63,7 +63,7 @@ test('base adapter should parseJson [failure]', () => {
 test('base adapter should parseJson [success]', () => {
 	// arrange
 	const EXPECTED = {dogs: true};
-	const adapter = new BaseAdapter(sinon.stub());
+	const adapter = new BaseAdapter(sinon.stub() as unknown as TreasuryClient);
 
 	// act
 	const result = adapter.parseJson('{"dogs":true}');

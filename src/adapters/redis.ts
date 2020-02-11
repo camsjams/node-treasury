@@ -1,4 +1,8 @@
-import BaseAdapter from './base';
+import BaseAdapter, {TreasuryClient, Callback} from './base';
+
+interface RedisTreasuryClient extends TreasuryClient {
+	setex: (key: string, expiresIn: number, value: string, callback: Callback) => void;
+}
 
 class RedisClientAdapter extends BaseAdapter {
 	get<T>(key: string): Promise<T> {

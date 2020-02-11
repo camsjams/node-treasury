@@ -1,4 +1,8 @@
-import BaseAdapter from './base';
+import BaseAdapter, {TreasuryClient, Callback} from './base';
+
+interface MemcachedTreasuryClient extends TreasuryClient {
+	set: (key: string, value: string, expiresIn: number, callback: Callback) => void;
+}
 
 class MemcachedClientAdapter extends BaseAdapter {
 	get<T>(key: string): Promise<T> {

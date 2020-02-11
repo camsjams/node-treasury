@@ -1,5 +1,6 @@
 import Memcached from 'memcached';
 import MemcachedAdapter from './memcached';
+import {TreasuryClient} from './base';
 
 let client: Memcached;
 beforeAll(() => {
@@ -21,7 +22,7 @@ function waitPromise(): Promise<void> {
 test('MemcachedAdapter should reject when not found in cache', async () => {
 	// arrange
 	expect.assertions(1);
-	const adapter = new MemcachedAdapter(client);
+	const adapter = new MemcachedAdapter(client as unknown as TreasuryClient);
 
 	// act
 	try {
@@ -35,7 +36,7 @@ test('MemcachedAdapter should reject when not found in cache', async () => {
 test('MemcachedAdapter should set in cache', async () => {
 	// arrange
 	expect.assertions(1);
-	const adapter = new MemcachedAdapter(client);
+	const adapter = new MemcachedAdapter(client as unknown as TreasuryClient);
 
 	// act
 	const result = await adapter.set('aCoolKey', {a: true}, 10);
@@ -47,7 +48,7 @@ test('MemcachedAdapter should set in cache', async () => {
 test('MemcachedAdapter should set then get from cache', async () => {
 	// arrange
 	expect.assertions(2);
-	const adapter = new MemcachedAdapter(client);
+	const adapter = new MemcachedAdapter(client as unknown as TreasuryClient);
 	const EXPECTED = {a: true};
 	const cacheKey = 'hasA';
 
@@ -63,7 +64,7 @@ test('MemcachedAdapter should set then get from cache', async () => {
 test('MemcachedAdapter should set then get bad data from cache', async () => {
 	// arrange
 	expect.assertions(2);
-	const adapter = new MemcachedAdapter(client);
+	const adapter = new MemcachedAdapter(client as unknown as TreasuryClient);
 	const cacheKey = 'setThenExpire';
 
 	// act
@@ -82,7 +83,7 @@ test('MemcachedAdapter should set then get bad data from cache', async () => {
 test('MemcachedAdapter should delete from cache', async () => {
 	// arrange
 	expect.assertions(1);
-	const adapter = new MemcachedAdapter(client);
+	const adapter = new MemcachedAdapter(client as unknown as TreasuryClient);
 	const cacheKey = 'numberOfCats';
 
 	// act
@@ -96,7 +97,7 @@ test('MemcachedAdapter should delete from cache', async () => {
 test('MemcachedAdapter should delete from cache and not get later', async () => {
 	// arrange
 	expect.assertions(3);
-	const adapter = new MemcachedAdapter(client);
+	const adapter = new MemcachedAdapter(client as unknown as TreasuryClient);
 	const cacheKey = 'otherNumberOfCats';
 
 	// act

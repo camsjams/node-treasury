@@ -1,7 +1,8 @@
 
-import getAdapter from './adapter';
+import getAdapter, {TreasuryAdapter} from './adapter';
+import {TreasuryClient} from './adapters/base';
 import getKey from './utils/getKey';
-import getCleanedOptions from './utils/getCleanedOptions';
+import getCleanedOptions, {TreasuryConfig, TreasuryOptions} from './utils/getCleanedOptions';
 
 export type InvestOptions = {
 	namespace?: string;
@@ -19,7 +20,7 @@ class Treasury {
 
 	constructor(options: TreasuryOptions) {
 		this.config = getCleanedOptions(options);
-		this.treasury = getAdapter(this.config.client);
+		this.treasury = getAdapter(this.config.client as TreasuryClient);
 	}
 
 	async invest<T>(thePromise: (p: TreasuryOptions) => Promise<T>, options: InvestOptions = {}): Promise<T> {

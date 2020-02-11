@@ -1,5 +1,6 @@
 import sinon from 'sinon';
 import getAdapter from './adapter';
+import {TreasuryClient} from './adapters/base';
 
 test('should throw error for undefined as invalid_client', () => {
 	// arrange
@@ -25,7 +26,7 @@ test('should throw error for falsy as invalid_client', () => {
 
 	// act
 	try {
-		result = getAdapter(false);
+		result = getAdapter(false as unknown as TreasuryClient);
 	} catch (e) {
 		error = e;
 	}
@@ -54,7 +55,7 @@ test('should return Redis client adapter', () => {
 	};
 
 	// act
-	const result = getAdapter(EXPECTED);
+	const result = getAdapter(EXPECTED as unknown as TreasuryClient);
 
 	// assert
 	expect(result.client).toEqual(EXPECTED);
@@ -70,7 +71,7 @@ test('should return Memcached client adapter', () => {
 	};
 
 	// act
-	const result = getAdapter(EXPECTED);
+	const result = getAdapter(EXPECTED as unknown as TreasuryClient);
 
 	// assert
 	expect(result.client).toEqual(EXPECTED);
@@ -84,7 +85,7 @@ test('should throw error for unknown as unknown_client', () => {
 
 	// act
 	try {
-		result = getAdapter(sinon.stub());
+		result = getAdapter(sinon.stub() as unknown as TreasuryClient);
 	} catch (e) {
 		error = e;
 	}

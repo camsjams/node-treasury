@@ -1,12 +1,13 @@
 import sinon from 'sinon';
 import MemoryAdapter from './memory';
+import {TreasuryClient} from './base';
 
 test('memory adapter should construct', () => {
 	// arrange
 	const client = sinon.stub();
 
 	// act
-	const result = new MemoryAdapter(client);
+	const result = new MemoryAdapter(client as unknown as TreasuryClient);
 
 	// assert
 	expect(result).toBeTruthy();
@@ -16,7 +17,7 @@ test('memory adapter should construct', () => {
 test('memory adapter should get [no data set]', async () => {
 	// arrange
 	expect.assertions(1);
-	const adapter = new MemoryAdapter(sinon.stub());
+	const adapter = new MemoryAdapter(sinon.stub() as unknown as TreasuryClient);
 
 	// act
 	try {
@@ -36,7 +37,7 @@ test('memory adapter should get [has data set]', async () => {
 		blackAndWhite: 3,
 		tabby: 1
 	};
-	const adapter = new MemoryAdapter(sinon.stub());
+	const adapter = new MemoryAdapter(sinon.stub() as unknown as TreasuryClient);
 	await adapter.set(KEY, EXPECTED, 122);
 
 	// act
@@ -49,7 +50,7 @@ test('memory adapter should get [has data set]', async () => {
 test('memory adapter should set', async () => {
 	// arrange
 	expect.assertions(1);
-	const adapter = new MemoryAdapter(sinon.stub());
+	const adapter = new MemoryAdapter(sinon.stub() as unknown as TreasuryClient);
 
 	// act
 	const result = await adapter.set('dogs', 'dalmatians', 101);
@@ -60,7 +61,7 @@ test('memory adapter should set', async () => {
 
 test('memory adapter should del', async () => {
 	// arrange
-	const adapter = new MemoryAdapter(sinon.stub());
+	const adapter = new MemoryAdapter(sinon.stub() as unknown as TreasuryClient);
 
 	// act
 	const result = await adapter.del('dogs');
@@ -71,7 +72,7 @@ test('memory adapter should del', async () => {
 
 test('memory adapter should getCacheItem [no item found]', () => {
 	// arrange
-	const adapter = new MemoryAdapter(sinon.stub());
+	const adapter = new MemoryAdapter(sinon.stub() as unknown as TreasuryClient);
 
 	// act
 	const result = adapter.getCacheItem('dogs' + Math.random());
@@ -86,7 +87,7 @@ test('memory adapter should getCacheItem [delete expired item found]', async () 
 	const clock = sinon.useFakeTimers();
 	const KEY = 'expiredFood' + Math.random();
 	const EXPECTED = {data: true};
-	const adapter = new MemoryAdapter(sinon.stub());
+	const adapter = new MemoryAdapter(sinon.stub() as unknown as TreasuryClient);
 	await adapter.set(KEY, EXPECTED, 10);
 
 	// act I
