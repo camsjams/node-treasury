@@ -26,7 +26,7 @@
   },
   "homepage": "https://github.com/camsjams/node-treasury#readme",
   "dependencies": {
-    "tauist": "1.1.0",
+    "tauist": "1.1.1",
     "json-stable-stringify": "1.0.1"
   },
   "devDependencies": {
