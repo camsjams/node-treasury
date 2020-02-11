@@ -39,7 +39,6 @@ var Treasury = require('treasury');
 var treasury = new Treasury({
     client: null,
     namespace: 'Treasury',
-    promiseFactory: Promise, // defaults to native promise
     ttl: tauist.s.fiveMinutes
 });
 ```
@@ -158,7 +157,7 @@ treasury.invest(doTheThingToReallyGetData({id: id}))
 ```
 
 ## Pull Requests
-In order to properly run the tests for this repo, on top of the npm install, you will need the dependencies in [Circle CI config](.circle/config.yml). All PRs require passing JSHint, JavaScript Code Style Checker (JSCS), and updated/added/passing unit and integration tests.
+In order to properly run the tests for this repo, on top of the npm install, you will need the dependencies in [Circle CI config](.circleci/config.yml). All PRs require passing eslint and code coverage and updated/added/passing unit and integration tests.
 
 ## Notes
 I tried really hard not to use a cache/cash pun when writing node-treasury.
