@@ -7,6 +7,7 @@ import getCleanedOptions, {TreasuryConfig, TreasuryOptions} from './utils/getCle
 export type InvestOptions = {
 	namespace?: string;
 	ttl?: number;
+	[param: string]: any;
 }
 
 export type DivestOptions = {
@@ -32,7 +33,7 @@ class Treasury {
 		try {
 			value = await this.treasury.get<T>(key);
 		} catch (error) {
-			value = await thePromise(this.config);
+			value = await thePromise(options);
 			this.treasury.set(key, value, ttl);
 		}
 
