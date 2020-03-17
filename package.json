@@ -1,6 +1,6 @@
 {
   "name": "treasury",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "description": "Check your caching layer before running your promises",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
